@@ -88,13 +88,15 @@
             <h1>
             <?=$row['title']?>
             </h1>
-            <?php
-            if($row['point'] !== 0){
-              echo "<h3 style='float: left; margin: 0;'>".$row['point']."</h3><h2 style='float: left; margin: 0; margin-top: 12px; margin-left: 5px;'>Point</h2>";
-            }elseif($row['salary'] !== 'Medium'){
-              echo "<h3 style='float: left; margin: 0;'>".$row['salary']."</h3><h2 style='float: left; margin: 0; margin-top: 12px; margin-left: 5px;'>.00</h2>";
-            }else{}
-            ?>
+            <div class="d-flex align-items-center">
+              <?php
+              if($row['point'] !== 0){
+                echo "<h3 style='float: left; margin: 0;'>".$row['point']."</h3><h2 style='float: left; margin: 0; margin-top: 12px; margin-left: 5px;'>Point</h2>";
+              }elseif($row['salary'] !== 'Medium'){
+                echo "<h3 style='float: left; margin: 0;'>".$row['salary']."</h3><h2 style='float: left; margin: 0; margin-top: 12px; margin-left: 5px;'>.00</h2>";
+              }else{}
+              ?>
+            </div>
           </div>
           <div class="d-flex right-side-car">
             <div class="component">

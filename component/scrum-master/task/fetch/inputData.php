@@ -20,13 +20,6 @@ if($type_value === "Point"){
     $value_point = 0;
     $value_salary = 0;
 }
-// echo $title."<br>";
-// echo $desc."<br>";
-// echo $startdate."<br>";
-// echo $deadline."<br>";
-// echo $type_priority."<br>";
-// echo $value_salary."<br>";
-// echo $value_point."<br>";
 
 mysqli_query($connect, "INSERT INTO tb_task 
 ( idtask, idboards, title, startdate, description, deadline, priority, status, link_file, point, salary) 
