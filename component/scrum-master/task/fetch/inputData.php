@@ -6,6 +6,7 @@ $title = $_POST["title"];
 $desc = $_POST["desc"];
 $startdate = $_POST["startdate"];
 $deadline = $_POST["deadline"];
+$idboards = $_POST["idboards"];
 $type_priority = $_POST["type_priority"];
 $type_value = $_POST["type_value"];
 
@@ -30,6 +31,6 @@ if($type_value === "Point"){
 mysqli_query($connect, "INSERT INTO tb_task 
 ( idtask, idboards, title, startdate, description, deadline, priority, status, link_file, point, salary) 
 values 
-(null, 1, '$title', '$startdate', '$desc', '$deadline', '$type_priority', 'Publish', '-', $value_point, $value_salary)");
+(null, $idboards, '$title', '$startdate', '$desc', '$deadline', '$type_priority', 'Publish', '-', $value_point, $value_salary)");
 
 header("location: ../?process=success");

@@ -1,13 +1,12 @@
 <?php
     include '../../../src/connection/connection.php';
-    $idboards = $_GET['id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>SM || Task</title>
+	<title>SM || Boards</title>
 
 	<!-- Favicon -->
 	<link rel="icon" type="image/x-icon" href="../../../src/images/favicon.png">
@@ -71,79 +70,64 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="height: 100vh;">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Task Boards</h1>
+        <h1 class="h2">Boards</h1>
       </div>
       <?php
         $no = 1;
-        $queryTask  = mysqli_query($connect, "SELECT * FROM tb_task WHERE idboards=$idboards");
+        $queryTask  = mysqli_query($connect, "SELECT * FROM tb_boards");
         while($row = mysqli_fetch_array($queryTask)){?>
         <div class="card-task p-4">
-          <div class="component-left-decoration">
+          <div class="component-left-decoration" style="background: #ED3C3C;">
             
           </div>
-          <div class="component-right-decoration">
+          <div class="component-right-decoration" style="background: linear-gradient(151deg, rgba(255, 0, 0, 0.4) 7.37%, rgba(255, 110, 48, 0.4) 41.97%, rgba(255, 240, 105, 0.4) 71.76%);">
             
           </div>
-          <div class="left-side-car">
+          <div class="left-side-card">
             <h1>
             <?=$row['title']?>
             </h1>
-            <?php
-            if($row['point'] !== 0){
-              echo "<h3 style='float: left; margin: 0;'>".$row['point']."</h3><h2 style='float: left; margin: 0; margin-top: 12px; margin-left: 5px;'>Point</h2>";
-            }elseif($row['salary'] !== 'Medium'){
-              echo "<h3 style='float: left; margin: 0;'>".$row['salary']."</h3><h2 style='float: left; margin: 0; margin-top: 12px; margin-left: 5px;'>.00</h2>";
-            }else{}
-            ?>
+            <h3 style='float: left; margin: 0; color: #FFF069;'><?=$row['status']?></h3>
+            <div>
+              <a href="../task?id=<?=$row['idboards']?>">
+                <button class="px-2 py-1 mt-2" style="background: #FF7F3F; border-radius: 8px; border: 0; color: #FFF; font-weight: 600;">See Task</button>
+              </a>
+            </div>
           </div>
-          <div class="d-flex right-side-car">
-            <div class="component">
+          <div class="center-side-card">
+            <div class="component" style="text-align: left;">
+                <h2>Description</h2>
+                <span style="color: #548CFF;"><?=$row['description']?></span>
+            </div>
+          </div>
+          <div class="d-flex right-side-card">
+            <div class="component ml-4" style="text-align: left;">
               <h2>Startdate</h2>
-              <span style="color: #548CFF;"><?=$row['startdate']?></span>
+              <span style="color: #E3C629;"><?=$row['startdate']?></span>
             </div>
-            <div class="ml-4 component">
+            <div class="component ml-4" style="text-align: left;">
               <h2>Deadline</h2>
-              <span style="color: #F33838 !important;"><?=$row['deadline']?></span>
+              <span style="color: #F33838;"><?=$row['deadline']?></span>
             </div>
-            <div class="ml-4 component">
-              <h2>Priority</h2>
-              <?php
-              if($row['priority'] === 'Low'){
-                echo "<span style='color: #38F378;'>Low</span>";
-              }elseif($row['priority'] === 'Medium'){
-                echo "<span style='color: #E3C629;'>Medium</span>";
-              }else{
-                echo "<span style='color: #F33838;'>Hard</span>";
-              }
-              ?>
-            </div>
-            <?php
-            if($row['status'] === 'Publish'){
-              echo '<button class="ml-4" style="background: #FF7F3F; border: 0; border-radius: 10px; z-index: 2;">Progress</button>';
-            }elseif($row['status'] === 'Verification'){
-              echo '<button class="ml-4" style="background: #38F378; border: 0; border-radius: 10px; z-index: 2;">Done</button>';
-            }
-            ?>
           </div>
         </div>
       <?php $no++;
       } ?> 
     </main>
 
-    <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn-linear-primary p-2 btn-fixed-bottom" >+ New task</button>
+    <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn-linear-primary p-2 btn-fixed-bottom" >+ New Boards</button>
     
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">New task</h5>
+            <h5 class="modal-title" id="exampleModalLabel">New Boards</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <form action="fetch/inputData.php" method="POST">
-          <input type="hidden" name="idboards" class="form-control" value="<?=$idboards?>">
           <div class="modal-body">
             <div class="form-group">
               <label for="exampleInputEmail1">Title</label>
@@ -170,46 +154,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Priority</label>
-              <div class="d-flex">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="type_priority" id="inlineRadio1" value="Low">
-                  <label class="form-check-label" for="inlineRadio1">Low</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="type_priority" id="inlineRadio2" value="Medium">
-                  <label class="form-check-label" for="inlineRadio2">Medium</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="type_priority" id="inlineRadio3" value="Hard">
-                  <label class="form-check-label" for="inlineRadio3">Hard</label>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Value</label>
-              <div class="d-flex">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="type_value" onchange="handleChange(this);" id="inlineRadio4" value="None">
-                  <label class="form-check-label" for="inlineRadio4">None</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="type_value" onchange="handleChange(this);" id="inlineRadio5" value="Point">
-                  <label class="form-check-label" for="inlineRadio5">Point</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="type_value" onchange="handleChange(this);" id="inlineRadio6" value="Salary">
-                  <label class="form-check-label" for="inlineRadio6">Salary</label>
-                </div>
-              </div>
-              <div class="form-group mt-2" style="display: none;" id="inp_point">
-                <input type="number" name="point_value" class="form-control" id="exampleFormControlInput1">
-              </div>
-              <div class="form-group mt-2" style="display: none;" id="inp_salary">
-                <input type="number" name="salary_value" class="form-control" id="exampleFormControlInput1">
               </div>
             </div>
           </div>
