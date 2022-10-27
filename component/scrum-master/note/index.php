@@ -49,20 +49,26 @@
         <h1 class="title-logo mb-4">TaskManager.</h1>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="home"></span>
+            <a class="nav-link d-flex align-items-center" href="#">
+              <span class="mr-3" data-feather="home"></span>
               Home
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">
-              <span data-feather="bar-chart-2"></span>
+            <a class="nav-link d-flex align-items-center" href="../boards/">
+              <span class="mr-3" data-feather="bar-chart-2"></span>
               Boards
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file"></span>
+            <a class="nav-link d-flex align-items-center" href="../send-report/">
+              <span class="mr-3" data-feather="send"></span>
+              Send Report
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active d-flex align-items-center" href="#">
+              <span class="mr-3" data-feather="file"></span>
               Note
             </a>
           </li>
