@@ -6,7 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>SM || Notes</title>
+	<title>SM || Send Report</title>
 
 	<!-- Favicon -->
 	<link rel="icon" type="image/x-icon" href="../../../src/images/favicon.png">
@@ -72,26 +72,51 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="height: 100vh;">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Notes</h1>
+        <h1 class="h2">Send Report</h1>
       </div>
-      <?php
-        $no = 1;
-        $queryNote  = mysqli_query($connect, "SELECT * FROM tb_note");?>
-          <div class="row">
-            <?php while($row = mysqli_fetch_array($queryNote)){?>
-              <div class="col-md-4 mb-4">
-                <div class="card-notes col-md-12 overflow-hidden p-3">
-                  <div class="component-right-decoration"></div>
-                  <h1><?=$row['title']?></h1>
-                  <p><?=$row['description']?></p>
-                  <p style="margin: 0;
-                  float: right;
-                  z-index: 2;"><?=$row['date']?></p>
-                </div>
-              </div>
-            <?php $no++;
-            } ?> 
+      <div class="parent-card-send-report">
+        <img src="../../../src/images/assets-1.png" alt="">
+        <div class="card-send-report p-4" style="padding-right: 200px !important;">
+          <h1>Fill in the email address to send an alert.</h1>
+          <form action="" method="post">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn-linear-primary p-2" >Send</button>
+          </form>
         </div>
+      </div>
+
+      <table class="table" style="margin-top: 50px;">
+        <thead>
+          <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Email</th>
+            <th scope="col">Date</th>
+            <th scope="col">Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          $no = 1;
+          $queryAccount  = mysqli_query($connect, "SELECT * FROM tb_report");
+          while($row = mysqli_fetch_array($queryAccount)){?>
+          <tr>
+            <th scope="row"><?=$no?></th>
+            <td><?=$row['name']?></td>
+            <td><?=$row['description']?></td>
+            <td><?=$row['email']?></td>
+            <td><?=$row['date']?></td>
+            <td><?=$row['role']?></td>
+          </tr>
+          <?php $no++;
+          } ?> 
+        </tbody>
+      </table>
     </main>
 
     <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn-linear-primary p-2 btn-fixed-bottom" >+ New Note</button>

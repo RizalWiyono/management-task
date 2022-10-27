@@ -1,4 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@100;200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cantora+One&family=Catamaran:wght@100;200;300;400;500;600;700;800&display=swap');
+
+.title-logo {
+    font-family: 'Cantora One', sans-serif;
+    padding: 0.5rem 1rem;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 28px;
+    /* identical to box height, or 112% */
+
+    display: flex;
+    align-items: center;
+
+    background: linear-gradient(93.85deg, #7900FF 0%, #548CFF 45.31%, #93FFD8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
 
 .btn-linear-primary {
     background: linear-gradient(95.62deg, #7900FF 0%, #548CFF 52.6%, #93FFD8 100%);
@@ -6,6 +25,7 @@
     font-family: 'Catamaran', sans-serif;
     color: #FFF;
     font-weight: 500;
+    border: 0;
 }
 
 .btn-fixed-bottom {
@@ -91,4 +111,76 @@
     z-index: 1;
     background: linear-gradient(151deg, rgba(121, 0, 255, 0.4) 7.37%, rgba(84, 140, 255, 0.4) 41.97%, rgba(147, 255, 216, 0.4) 71.76%);
     filter: blur(21.5px);
+}
+
+.card-notes {
+    background: #242424;
+    box-shadow: 8px 8px 14px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+}
+
+.card-notes h1 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    /* identical to box height, or 140% */
+
+    display: flex;
+    align-items: center;
+
+    /* Color Text/Heading White */
+
+    color: #FFFFFF;
+}
+
+.card-notes p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    /* or 157% */
+
+    display: flex;
+    align-items: center;
+
+    /* Color Text/Sub-Heading */
+
+    color: #B9B9B9;
+}
+
+.card-send-report {
+    background: rgba(57, 57, 57, 0.49);
+    box-shadow: 6px 6px 16px rgba(147, 255, 216, 0.15);
+    backdrop-filter: blur(45px);
+    /* Note: backdrop-filter has minimal browser support */
+    width: 90%;
+    border-radius: 30px;
+}
+
+.card-send-report h1 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 32px;
+    /* identical to box height, or 133% */
+
+    display: flex;
+    align-items: center;
+
+    /* Color Text/Sub-Heading */
+
+    color: #B9B9B9;
+}
+
+.parent-card-send-report {
+    position: relative;
+}
+
+.parent-card-send-report img {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 200px;
+    z-index: 1;
 }

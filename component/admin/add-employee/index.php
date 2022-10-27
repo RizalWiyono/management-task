@@ -45,6 +45,7 @@
   <div class="row">
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
       <div class="sidebar-sticky">
+        <h1 class="title-logo mb-4">TaskManager.</h1>
         <ul class="nav flex-column">
           <li class="nav-item">
             <a class="nav-link" href="#">
