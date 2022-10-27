@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@100;200;300;400;500;600;700;800&display=swap');
+
+.btn-linear-primary {
+    background: linear-gradient(95.62deg, #7900FF 0%, #548CFF 52.6%, #93FFD8 100%);
+    border-radius: 8px;
+    font-family: 'Catamaran', sans-serif;
+    color: #FFF;
+    font-weight: 500;
+}
+
+.btn-fixed-bottom {
+    position: fixed !important;
+    width: 10%;
+    right: 10px;
+    bottom: 10px;
+}
+
+.modal-content {
+    background: #191A19;
+    box-shadow: 2px 0px 60px -20px rgba(0, 0, 0, 0.75);
+}
+
+.form-control {
+    background-color: #202020;
+    color: #B9B9B9;
+}
+
+.form-control:focus {
+    background-color: #202020;
+    color: #B9B9B9;
+}
+
+.card-task {
+    background-color: #242424;
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    padding-left: 40px !important;
+}
+
+.card-task h1 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.card-task h2 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    color: #B9B9B9;
+}
+
+.card-task span {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.card-task .component {
+    text-align: center;
+}
+
+.component-left-decoration {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 10px;
+    height: 100%;
+    background: linear-gradient(180deg, #7900FF 0%, #548CFF 52.08%, #93FFD8 100%);
+}
+
+.component-right-decoration {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 60px;
+    height: 100%;
+    z-index: 1;
+    background: linear-gradient(151deg, rgba(121, 0, 255, 0.4) 7.37%, rgba(84, 140, 255, 0.4) 41.97%, rgba(147, 255, 216, 0.4) 71.76%);
+    filter: blur(21.5px);
+}
