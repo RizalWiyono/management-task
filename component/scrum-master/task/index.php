@@ -49,7 +49,7 @@
         <h1 class="title-logo mb-4">TaskManager.</h1>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center" href="#">
+            <a class="nav-link d-flex align-items-center" href="../home/">
               <span class="mr-3" data-feather="home"></span>
               Home
             </a>

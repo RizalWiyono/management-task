@@ -47,7 +47,7 @@
       <div class="sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center" href="#">
+            <a class="nav-link d-flex align-items-center" href="../home/">
               <span class="mr-3" data-feather="home"></span>
               Home
             </a>

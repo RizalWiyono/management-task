@@ -6,7 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>SM || Send Report</title>
+	<title>SM || Notes</title>
 
 	<!-- Favicon -->
 	<link rel="icon" type="image/x-icon" href="../../../src/images/favicon.png">
@@ -49,26 +49,26 @@
         <h1 class="title-logo mb-4">TaskManager.</h1>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center" href="../home/">
-              <span class="mr-3" data-feather="home"></span>
+            <a class="nav-link" href="../home/">
+              <span data-feather="home"></span>
               Home
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center" href="../boards/">
-              <span class="mr-3" data-feather="bar-chart-2"></span>
-              Boards
+            <a class="nav-link" href="../add-employee/">
+              <span data-feather="users"></span>
+              Input Employee
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active d-flex align-items-center" href="#">
-              <span class="mr-3" data-feather="send"></span>
-              Send Report
+            <a class="nav-link" href="#">
+              <span data-feather="bar-chart-2"></span>
+              Report Data
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center" href="../note/">
-              <span class="mr-3" data-feather="file"></span>
+            <a class="nav-link active" href="#">
+              <span data-feather="file"></span>
               Note
             </a>
           </li>
@@ -78,52 +78,60 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="height: 100vh;">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Send Report</h1>
+        <h1 class="h2">Notes</h1>
       </div>
-      <div class="parent-card-send-report">
-        <img src="../../../src/images/assets-1.png" alt="">
-        <div class="card-send-report p-4" style="padding-right: 200px !important;">
-          <h1>Fill in the email address to send an alert.</h1>
-          <form action="" method="post">
+      <?php
+        $no = 1;
+        $queryNote  = mysqli_query($connect, "SELECT * FROM tb_note");?>
+          <div class="row">
+            <?php while($row = mysqli_fetch_array($queryNote)){?>
+              <div class="col-md-4 mb-4">
+                <div class="card-notes col-md-12 overflow-hidden p-3">
+                  <div class="component-right-decoration"></div>
+                  <h1><?=$row['title']?></h1>
+                  <p><?=$row['description']?></p>
+                  <p style="margin: 0;
+                  float: right;
+                  z-index: 2;"><?=$row['date']?></p>
+                </div>
+              </div>
+            <?php $no++;
+            } ?> 
+        </div>
+    </main>
+
+    <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn-linear-primary p-2 btn-fixed-bottom" >+ New Note</button>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New Notes</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="fetch/inputData.php" method="POST">
+          <div class="modal-body">
             <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              <label for="exampleInputEmail1">Title</label>
+              <input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="Title here...">
             </div>
-            <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn-linear-primary p-2" >Send</button>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Description</label>
+              <textarea name="desc" id="" class="form-control" rows="3">Description here...
+              </textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
           </form>
         </div>
       </div>
-
-      <table class="table" style="margin-top: 50px;">
-        <thead>
-          <tr>
-            <th scope="col">No.</th>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Email</th>
-            <th scope="col">Date</th>
-            <th scope="col">Role</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          $no = 1;
-          $queryAccount  = mysqli_query($connect, "SELECT * FROM tb_report");
-          while($row = mysqli_fetch_array($queryAccount)){?>
-          <tr>
-            <th scope="row"><?=$no?></th>
-            <td><?=$row['name']?></td>
-            <td><?=$row['description']?></td>
-            <td><?=$row['email']?></td>
-            <td><?=$row['date']?></td>
-            <td><?=$row['role']?></td>
-          </tr>
-          <?php $no++;
-          } ?> 
-        </tbody>
-      </table>
-    </main>
+    </div>
   </div>
 </div>
 </body>

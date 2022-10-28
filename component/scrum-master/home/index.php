@@ -6,7 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>SM || Send Report</title>
+	<title>SM || Home</title>
 
 	<!-- Favicon -->
 	<link rel="icon" type="image/x-icon" href="../../../src/images/favicon.png">
@@ -15,29 +15,30 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 	<!-- Style -->
 	<link rel="stylesheet" type="text/css" href="../../../src/css/style.css">
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
 
-    <!-- Bootstrap core CSS -->
-    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-    .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
+  <style>
+  .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+  }
 
-    @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-        }
-    }
-    </style>
-    <!-- Custom styles for this template -->
-    <link href="../../../src/css/dashboard.css" rel="stylesheet">
+  @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+      }
+  }
+  </style>
+  <!-- Custom styles for this template -->
+  <link href="../../../src/css/dashboard.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -49,7 +50,7 @@
         <h1 class="title-logo mb-4">TaskManager.</h1>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center" href="../home/">
+            <a class="nav-link active d-flex align-items-center" href="#">
               <span class="mr-3" data-feather="home"></span>
               Home
             </a>
@@ -61,7 +62,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active d-flex align-items-center" href="#">
+            <a class="nav-link d-flex align-items-center" href="../send-report/">
               <span class="mr-3" data-feather="send"></span>
               Send Report
             </a>
@@ -78,51 +79,11 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="height: 100vh;">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Send Report</h1>
+        <h1 class="h2">Home</h1>
       </div>
-      <div class="parent-card-send-report">
-        <img src="../../../src/images/assets-1.png" alt="">
-        <div class="card-send-report p-4" style="padding-right: 200px !important;">
-          <h1>Fill in the email address to send an alert.</h1>
-          <form action="" method="post">
-            <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-            <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn-linear-primary p-2" >Send</button>
-          </form>
-        </div>
+      <div>
+        <canvas id="myChart"></canvas>
       </div>
-
-      <table class="table" style="margin-top: 50px;">
-        <thead>
-          <tr>
-            <th scope="col">No.</th>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Email</th>
-            <th scope="col">Date</th>
-            <th scope="col">Role</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          $no = 1;
-          $queryAccount  = mysqli_query($connect, "SELECT * FROM tb_report");
-          while($row = mysqli_fetch_array($queryAccount)){?>
-          <tr>
-            <th scope="row"><?=$no?></th>
-            <td><?=$row['name']?></td>
-            <td><?=$row['description']?></td>
-            <td><?=$row['email']?></td>
-            <td><?=$row['date']?></td>
-            <td><?=$row['role']?></td>
-          </tr>
-          <?php $no++;
-          } ?> 
-        </tbody>
-      </table>
     </main>
   </div>
 </div>
@@ -157,4 +118,34 @@
       document.getElementById('inp_salary').style.display = 'none'
     }
   }
+
+  const labels = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+  ];
+
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'My First dataset',
+      backgroundColor: 'rgb(255, 99, 132)',
+      borderColor: 'rgb(255, 99, 132)',
+      data: [0, 10, 5, 2, 20, 30, 45],
+    }]
+  };
+
+  const config = {
+    type: 'line',
+    data: data,
+    options: {}
+  };
+
+  const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
 </script>
