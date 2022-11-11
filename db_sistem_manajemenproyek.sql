@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2022 at 07:33 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Nov 11, 2022 at 04:09 AM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -70,6 +70,8 @@ CREATE TABLE `tb_boards` (
   `description` text NOT NULL,
   `startdate` date NOT NULL,
   `deadline` date NOT NULL,
+  `owner` varchar(100) NOT NULL,
+  `pay_status` varchar(45) NOT NULL,
   `status` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -77,8 +79,8 @@ CREATE TABLE `tb_boards` (
 -- Dumping data for table `tb_boards`
 --
 
-INSERT INTO `tb_boards` (`idboards`, `title`, `description`, `startdate`, `deadline`, `status`) VALUES
-(1, 'Gamabunta', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', '2022-10-01', '2022-10-04', 'On Progress');
+INSERT INTO `tb_boards` (`idboards`, `title`, `description`, `startdate`, `deadline`, `owner`, `pay_status`, `status`) VALUES
+(1, 'xxx', 'xxx', '2022-11-02', '2022-11-16', 'zzz', 'Belum Lunas', 'On Progress');
 
 -- --------------------------------------------------------
 
@@ -106,16 +108,6 @@ CREATE TABLE `tb_note` (
   `description` text NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tb_note`
---
-
-INSERT INTO `tb_note` (`idnote`, `idaccount`, `title`, `description`, `date`) VALUES
-(1, 1, 'asdasd', 'zvxcvxcvxc', '0000-00-00'),
-(2, 1, 'zxcxzc', 'czxc', '0000-00-00'),
-(3, 1, 'czxc', 'Description here...\r\n              czxczxc', '0000-00-00'),
-(4, 1, 'asd', 'Description here...\r\n              ', '2022-10-27');
 
 -- --------------------------------------------------------
 
@@ -211,13 +203,6 @@ CREATE TABLE `tb_task` (
   `point` int(11) DEFAULT NULL,
   `salary` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tb_task`
---
-
-INSERT INTO `tb_task` (`idtask`, `idboards`, `title`, `startdate`, `description`, `deadline`, `priority`, `status`, `link_file`, `point`, `salary`) VALUES
-(1, 1, '123', '2022-10-01', 'qwe', '2022-10-24', 'Medium', 'Done', '-', 123, 0);
 
 -- --------------------------------------------------------
 
@@ -326,10 +311,16 @@ ALTER TABLE `tb_boards`
   MODIFY `idboards` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `tb_contribution`
+--
+ALTER TABLE `tb_contribution`
+  MODIFY `idcontribution` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tb_note`
 --
 ALTER TABLE `tb_note`
-  MODIFY `idnote` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idnote` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tb_point`
@@ -347,7 +338,7 @@ ALTER TABLE `tb_target_point`
 -- AUTO_INCREMENT for table `tb_task`
 --
 ALTER TABLE `tb_task`
-  MODIFY `idtask` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idtask` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
