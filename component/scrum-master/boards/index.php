@@ -82,38 +82,62 @@
         $no = 1;
         $queryTask  = mysqli_query($connect, "SELECT * FROM tb_boards");
         while($row = mysqli_fetch_array($queryTask)){?>
-        <div class="card-task p-4">
+        <div class="card-task d-block p-4">
           <div class="component-left-decoration" style="background: #ED3C3C;">
             
           </div>
           <div class="component-right-decoration" style="background: linear-gradient(151deg, rgba(255, 0, 0, 0.4) 7.37%, rgba(255, 110, 48, 0.4) 41.97%, rgba(255, 240, 105, 0.4) 71.76%);">
             
           </div>
-          <div class="left-side-card">
-            <h1>
-            <?=$row['title']?>
-            </h1>
-            <h3 style='float: left; margin: 0; color: #FFF069;'><?=$row['status']?></h3>
-            <div>
-              <a href="../task?id=<?=$row['idboards']?>">
-                <button class="px-2 py-1 mt-2" style="background: #FF7F3F; border-radius: 8px; border: 0; color: #FFF; font-weight: 600;">See Task</button>
-              </a>
+          
+          <div class="d-flex align-items-center justify-content-between" style="width: 100%;">
+            <div class="left-side-card">
+              <h1>
+              <?=$row['title']?>
+              </h1>
+              <h3 style='float: left; margin: 0; color: #FFF069;'><?=$row['status']?></h3>
+              <div>
+                <a href="../task?id=<?=$row['idboards']?>">
+                  <button class="px-2 py-1 mt-2" style="background: #FF7F3F; border-radius: 8px; border: 0; color: #FFF; font-weight: 600;">See Task</button>
+                </a>
+              </div>
+            </div>
+            <div class="center-side-card">
+              <div class="component" style="text-align: left;">
+                  <h2>Description</h2>
+                  <span style="color: #548CFF;"><?=$row['description']?></span>
+              </div>
+            </div>
+            <div class="d-flex right-side-card">
+              <div class="component ml-4" style="text-align: left;">
+                <h2>Startdate</h2>
+                <span style="color: #E3C629;"><?=$row['startdate']?></span>
+              </div>
+              <div class="component ml-4" style="text-align: left;">
+                <h2>Deadline</h2>
+                <span style="color: #F33838;"><?=$row['deadline']?></span>
+              </div>
             </div>
           </div>
-          <div class="center-side-card">
-            <div class="component" style="text-align: left;">
-                <h2>Description</h2>
-                <span style="color: #548CFF;"><?=$row['description']?></span>
+          <div class="d-flex align-items-center justify-content-between" style="width: 100%;">
+            <div class="left-side-card">
+              <h3 style='float: left; margin: 0; color: transparent;'><?=$row['status']?></h3>
             </div>
-          </div>
-          <div class="d-flex right-side-card">
-            <div class="component ml-4" style="text-align: left;">
-              <h2>Startdate</h2>
-              <span style="color: #E3C629;"><?=$row['startdate']?></span>
+            <div class="center-side-card">
+              <div class="component" style="text-align: left;">
+                  <h2>Owner</h2>
+                  <span style="color: #548CFF;"><?=$row['owner']?></span>
+              </div>
             </div>
-            <div class="component ml-4" style="text-align: left;">
-              <h2>Deadline</h2>
-              <span style="color: #F33838;"><?=$row['deadline']?></span>
+            <div class="d-flex right-side-card">
+              <div class="component ml-4" style="text-align: left;">
+                <h2 style="color: transparent;">Pay Status</h2>
+                <span style="color: transparent;"><?=$row['pay_status']?></span>
+              </div>
+              <div class="component ml-4" style="text-align: left;">
+                <h2>Pay Status</h2>
+                <span style="color: #548CFF;"><?=$row['pay_status']?></span>
+              </div>
             </div>
           </div>
         </div>
@@ -135,6 +159,17 @@
           </div>
           <form action="fetch/inputData.php" method="POST">
           <div class="modal-body">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Owner</label>
+              <input type="text" name="owner" class="form-control" id="exampleFormControlInput1" placeholder="Owner name here...">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Pay Status</label>
+              <select name="pay_status" id="" class="form-control">
+                <option value="Lunas">Lunas</option>
+                <option value="Belum Lunas">Belum Lunas</option>
+              </select>
+            </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Title</label>
               <input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="Title task here...">
