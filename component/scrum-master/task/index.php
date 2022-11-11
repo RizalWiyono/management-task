@@ -105,6 +105,70 @@
               ?>
             </div>
           </div>
+
+          <div class="d-flex">
+            <div class="component">
+              <h2>Member</h2>
+              <div class="d-flex align-items-center">
+                <button type="button" style="background-color: transparent; border: 0; outline: none;" data-toggle="modal" data-target="#modalAssigne">
+                  <svg data-toggle="modal" data-target="#doing<?=$rowDoing["idlistTask"]?>" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6.99984 7.00033H4.6665M6.99984 4.66699V7.00033V4.66699ZM6.99984 7.00033V9.33366V7.00033ZM6.99984 7.00033H9.33317H6.99984Z" stroke="#CDCDCD" stroke-linecap="round"/>
+                      <path d="M6.99984 12.8337C10.2215 12.8337 12.8332 10.222 12.8332 7.00033C12.8332 3.77866 10.2215 1.16699 6.99984 1.16699C3.77818 1.16699 1.1665 3.77866 1.1665 7.00033C1.1665 10.222 3.77818 12.8337 6.99984 12.8337Z" stroke="#CDCDCD"/>
+                  </svg>
+                </button>
+                <?php
+                $no = 1;
+                $queryContributon  = mysqli_query($connect, "SELECT * FROM tb_contribution INNER JOIN tb_account ON tb_contribution.idaccount = tb_account.idaccount;");
+                while($rowContributon = mysqli_fetch_array($queryContributon)){?>
+                <div class="mr-2">
+                  <img data-toggle="tooltip" data-placement="left" data-html="true" title="<em><?=$rowContributon['name']?></em>"
+                  style="
+                  width: 14px;
+                  height: 14px;
+                  object-fit: cover;
+                  border-radius: 100px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/No_image_%28male%29.svg/450px-No_image_%28male%29.svg.png" alt="" srcset="">
+                </div>
+                <?php } ?>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="modalAssigne" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="fetch/addMember.php" method="POST">
+                    <?php
+                    $no = 1;
+                    $queryEmployee  = mysqli_query($connect, "SELECT * FROM tb_account");
+                    while($rowEmployee = mysqli_fetch_array($queryEmployee)){?>
+                      <label for="contribution<?=$rowEmployee['idaccount']?>" class="d-flex align-items-center">
+                        <input type="radio" id="contribution<?=$rowEmployee['idaccount']?>" value="<?=$rowEmployee['idaccount']?>" name="idaccount" class="mr-2">
+                        <img data-toggle="tooltip" data-placement="top" data-html="true" title="<em><?=$rowEmployee['name']?></em>"
+                        style="
+                        width: 25px;
+                        height: 25px;
+                        object-fit: cover;
+                        border-radius: 100px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/No_image_%28male%29.svg/450px-No_image_%28male%29.svg.png" alt="" srcset="">
+                      </label>
+                    <?php } ?>
+
+                    <input type="hidden" value="<?=$row['idtask']?>" name="idtask">
+                    <input type="hidden" value="<?=$_GET['id']?>" name="idpage">
+
+                    <button type="submit" class="btn btn-primary mt-4">Tambahkan</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="d-flex right-side-car">
             <div class="component">
               <h2>Startdate</h2>
@@ -248,6 +312,10 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 <script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+
   const radioButtons = document.querySelectorAll('input[name="type_value"]');
   if(document.getElementById('inlineRadio5').checked) {
     document.getElementById('inp_point').style.display = 'none'
