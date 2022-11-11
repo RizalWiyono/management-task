@@ -15,7 +15,13 @@
 	<link rel="stylesheet" type="text/css" href="../../src/css/style.css">
 
 </head>
-<body style="height: 100%; position:absolute; overflow-x: hidden; width: 100%; background: #191A19;">
+<body style="height: 100%; position:absolute; overflow: hidden; width: 100%; background: #191A19;">
+	<img src="../../src/images/assets-2.png" alt="" style="position: absolute;
+    bottom: -300px;
+    left: -250px;">
+	<img src="../../src/images/assets-2.png" alt="" style="position: absolute;
+    top: -300px;
+    right: -250px;">
 	<div class="card-auth">
 		<div class="left-auth-section">
 			<h1>Login</h1>

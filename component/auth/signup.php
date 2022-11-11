@@ -15,11 +15,18 @@
 	<link rel="stylesheet" type="text/css" href="../../src/css/style.css">
 
 </head>
-<body style="overflow-x: hidden; width: 100%; background: #191A19;">
+<body style="overflow: hidden; width: 100%; background: #191A19;">
+	<img src="../../src/images/assets-2.png" alt="" style="position: absolute;
+    bottom: -300px;
+    left: -250px;">
+	<img src="../../src/images/assets-2.png" alt="" style="position: absolute;
+    top: -300px;
+    right: -250px;">
 	<div class="card-auth">
 		<div class="left-auth-section">
 			<h1>Register</h1>
 			<p>Welcome to Project Management Dashboard</p>
+			<a href="login.php">Login</a>
 
 			<form action="fetch/signup.php" method="post">
 				<div class="row">
