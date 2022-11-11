@@ -184,3 +184,36 @@
     width: 200px;
     z-index: 1;
 }
+
+.card-auth {
+    background: rgba(57, 57, 57, 0.49);
+    box-shadow: 6px 6px 16px rgba(147, 255, 216, 0.15);
+    backdrop-filter: blur(45px);
+    /* Note: backdrop-filter has minimal browser support */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    padding: 50px;
+    border-radius: 35px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+}
+
+.card-auth button {
+    background: linear-gradient(95.62deg, #7900FF 0%, #548CFF 52.6%, #93FFD8 100%);
+    border-radius: 8px;
+    border: 0;
+    outline: none;
+}
+
+.card-auth .left-auth-section {
+    width: 60%;
+}
+
+.card-auth img {
+    width: 40%;
+}
