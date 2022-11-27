@@ -82,7 +82,7 @@
         $no = 1;
         $queryTask  = mysqli_query($connect, "SELECT * FROM tb_boards");
         while($row = mysqli_fetch_array($queryTask)){?>
-        <div class="card-task d-block p-4">
+        <div class="card-task d-block p-4 mb-3">
           <div class="component-left-decoration" style="background: #ED3C3C;">
             
           </div>
@@ -102,10 +102,15 @@
                 </a>
               </div>
             </div>
-            <div class="center-side-card">
+            <div class="center-side-card d-flex">
               <div class="component" style="text-align: left;">
                   <h2>Description</h2>
                   <span style="color: #548CFF;"><?=$row['description']?></span>
+              </div>
+              
+              <div class="component ml-2" style="text-align: left;">
+                  <h2>Owner</h2>
+                  <span style="color: #548CFF;"><?=$row['owner']?></span>
               </div>
             </div>
             <div class="d-flex right-side-card">
@@ -123,10 +128,18 @@
             <div class="left-side-card">
               <h3 style='float: left; margin: 0; color: transparent;'><?=$row['status']?></h3>
             </div>
-            <div class="center-side-card">
+            <div class="center-side-card d-flex">
               <div class="component" style="text-align: left;">
-                  <h2>Owner</h2>
-                  <span style="color: #548CFF;"><?=$row['owner']?></span>
+                  <h2>Address</h2>
+                  <span style="color: #548CFF;"><?=$row['address']?></span>
+              </div>
+              <div class="component ml-2" style="text-align: left;">
+                  <h2>No. Telp</h2>
+                  <span style="color: #548CFF;"><?=$row['no_telp']?></span>
+              </div>
+              <div class="component ml-2" style="text-align: left;">
+                  <h2>Email</h2>
+                  <span style="color: #548CFF;"><?=$row['email']?></span>
               </div>
             </div>
             <div class="d-flex right-side-card">
@@ -137,6 +150,10 @@
               <div class="component ml-4" style="text-align: left;">
                 <h2>Pay Status</h2>
                 <span style="color: #548CFF;"><?=$row['pay_status']?></span>
+              </div>
+              <div class="component ml-4" style="text-align: left;">
+                <h2>Price</h2>
+                <span style="color: #548CFF;">Rp. <?=$row['price']?></span>
               </div>
             </div>
           </div>
@@ -164,11 +181,24 @@
               <input type="text" name="owner" class="form-control" id="exampleFormControlInput1" placeholder="Owner name here...">
             </div>
             <div class="form-group">
+              <label for="exampleInputEmail1">Address</label>
+              <textarea name="address" id="" class="form-control" cols="30" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email</label>
+              <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="Owner email here...">
+            </div>
+            <hr>
+            <div class="form-group">
               <label for="exampleInputEmail1">Pay Status</label>
               <select name="pay_status" id="" class="form-control">
                 <option value="Lunas">Lunas</option>
                 <option value="Belum Lunas">Belum Lunas</option>
               </select>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Price</label>
+              <input type="number" name="price" class="form-control" id="exampleFormControlInput1" placeholder="Price task here...">
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Title</label>

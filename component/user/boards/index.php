@@ -77,7 +77,7 @@
         $no = 1;
         $queryTask  = mysqli_query($connect, "SELECT * FROM tb_boards");
         while($row = mysqli_fetch_array($queryTask)){?>
-        <div class="card-task p-4">
+        <div class="card-task p-4 mb-3">
           <div class="component-left-decoration" style="background: #ED3C3C;">
             
           </div>

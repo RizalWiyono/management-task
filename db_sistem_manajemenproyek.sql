@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2022 at 04:09 AM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 8.1.10
+-- Generation Time: Nov 27, 2022 at 04:06 AM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -48,19 +49,6 @@ INSERT INTO `tb_account` (`idaccount`, `idorganization`, `username`, `email`, `p
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_activity`
---
-
-CREATE TABLE `tb_activity` (
-  `idactivity` int(11) NOT NULL,
-  `idaccount` int(11) DEFAULT NULL,
-  `activity` text DEFAULT NULL,
-  `date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tb_boards`
 --
 
@@ -71,7 +59,11 @@ CREATE TABLE `tb_boards` (
   `startdate` date NOT NULL,
   `deadline` date NOT NULL,
   `owner` varchar(100) NOT NULL,
+  `address` text NOT NULL,
+  `no_telp` int(15) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `pay_status` varchar(45) NOT NULL,
+  `price` bigint(20) NOT NULL,
   `status` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -79,8 +71,9 @@ CREATE TABLE `tb_boards` (
 -- Dumping data for table `tb_boards`
 --
 
-INSERT INTO `tb_boards` (`idboards`, `title`, `description`, `startdate`, `deadline`, `owner`, `pay_status`, `status`) VALUES
-(1, 'xxx', 'xxx', '2022-11-02', '2022-11-16', 'zzz', 'Belum Lunas', 'On Progress');
+INSERT INTO `tb_boards` (`idboards`, `title`, `description`, `startdate`, `deadline`, `owner`, `address`, `no_telp`, `email`, `pay_status`, `price`, `status`) VALUES
+(1, 'xxx', 'xxx', '2022-11-02', '2022-11-16', 'zzz', '', 0, '', 'Belum Lunas', 0, 'On Progress'),
+(2, 'zxc', 'asd', '2022-11-09', '2022-11-17', 'zzz', '', 0, '', 'Lunas', 0, 'On Progress');
 
 -- --------------------------------------------------------
 
@@ -93,6 +86,19 @@ CREATE TABLE `tb_contribution` (
   `idaccount` int(11) NOT NULL,
   `idtask` int(11) NOT NULL,
   `status` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_history`
+--
+
+CREATE TABLE `tb_history` (
+  `idactivity` int(11) NOT NULL,
+  `idaccount` int(11) DEFAULT NULL,
+  `activity` text,
+  `date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -119,10 +125,10 @@ CREATE TABLE `tb_organization` (
   `idorganization` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `company_service_type` varchar(100) DEFAULT NULL,
-  `address` text DEFAULT NULL,
-  `link_photo` text DEFAULT NULL,
+  `address` text,
+  `link_photo` text,
   `no_telp` int(11) DEFAULT NULL,
-  `website` text DEFAULT NULL,
+  `website` text,
   `email` varchar(100) DEFAULT NULL,
   `username` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL
@@ -201,22 +207,18 @@ CREATE TABLE `tb_task` (
   `status` varchar(45) NOT NULL,
   `link_file` text NOT NULL,
   `point` int(11) DEFAULT NULL,
-  `salary` int(11) DEFAULT NULL
+  `salary` int(11) DEFAULT NULL,
+  `flow` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `tb_wallet`
+-- Dumping data for table `tb_task`
 --
 
-CREATE TABLE `tb_wallet` (
-  `idwallet` int(11) NOT NULL,
-  `idaccount` int(11) NOT NULL,
-  `idtask` int(11) NOT NULL,
-  `point` int(11) NOT NULL,
-  `date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `tb_task` (`idtask`, `idboards`, `title`, `startdate`, `description`, `deadline`, `priority`, `status`, `link_file`, `point`, `salary`, `flow`) VALUES
+(1, 2, 'qwe', '2022-11-03', 'zxczxc', '2022-11-17', 'Low', 'Done', '-', 0, 0, 1),
+(2, 2, 'ss', '2022-11-11', 'vcxv', '2022-11-16', 'Low', 'Publish', '-', 0, 0, 2),
+(3, 2, 'qwerty', '2022-11-05', 'zxczxc', '2022-11-15', 'Low', 'Publish', '-', 0, 0, 3);
 
 --
 -- Indexes for dumped tables
@@ -229,12 +231,6 @@ ALTER TABLE `tb_account`
   ADD PRIMARY KEY (`idaccount`);
 
 --
--- Indexes for table `tb_activity`
---
-ALTER TABLE `tb_activity`
-  ADD PRIMARY KEY (`idactivity`);
-
---
 -- Indexes for table `tb_boards`
 --
 ALTER TABLE `tb_boards`
@@ -245,6 +241,12 @@ ALTER TABLE `tb_boards`
 --
 ALTER TABLE `tb_contribution`
   ADD PRIMARY KEY (`idcontribution`);
+
+--
+-- Indexes for table `tb_history`
+--
+ALTER TABLE `tb_history`
+  ADD PRIMARY KEY (`idactivity`);
 
 --
 -- Indexes for table `tb_note`
@@ -289,12 +291,6 @@ ALTER TABLE `tb_task`
   ADD PRIMARY KEY (`idtask`);
 
 --
--- Indexes for table `tb_wallet`
---
-ALTER TABLE `tb_wallet`
-  ADD PRIMARY KEY (`idwallet`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -308,7 +304,7 @@ ALTER TABLE `tb_account`
 -- AUTO_INCREMENT for table `tb_boards`
 --
 ALTER TABLE `tb_boards`
-  MODIFY `idboards` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idboards` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_contribution`
@@ -338,7 +334,7 @@ ALTER TABLE `tb_target_point`
 -- AUTO_INCREMENT for table `tb_task`
 --
 ALTER TABLE `tb_task`
-  MODIFY `idtask` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idtask` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

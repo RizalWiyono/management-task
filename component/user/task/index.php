@@ -78,7 +78,7 @@
         $no = 1;
         $queryTask  = mysqli_query($connect, "SELECT * FROM tb_task WHERE idboards=$idboards");
         while($row = mysqli_fetch_array($queryTask)){?>
-        <div class="card-task p-4">
+        <div class="card-task p-4 mb-3">
           <div class="component-left-decoration">
             
           </div>
@@ -121,15 +121,25 @@
               ?>
             </div>
             <?php
+            
+            $flowCode = $row['flow']-1;
+            $flowStatus = 'Done';
+            $queryFlowStatus  = mysqli_query($connect, "SELECT * FROM tb_task WHERE flow=$flowCode AND idboards=$idboards");
+            while($rowFlowStatus = mysqli_fetch_array($queryFlowStatus)){
+              $flowStatus = $rowFlowStatus['status'];
+            }
+
             if($row['status'] === 'Publish'){
-              echo '<form action="fetch/validationTask.php" method="post" style="z-index: 2;">
-                <input type="hidden" value="'.$idboards.'" name="paramId">
-                <input type="hidden" value="'.$row['idtask'].'" name="param">
-                <button type="submit" class="ml-4" style="background: #FF7F3F; border: 0; border-radius: 10px; z-index: 2; height: 100%;">></button>
-              </form>';
+              if($flowStatus === 'Done'){
+                echo '<form action="fetch/validationTask.php" method="post" style="z-index: 2;">
+                  <input type="hidden" value="'.$idboards.'" name="paramId">
+                  <input type="hidden" value="'.$row['idtask'].'" name="param">
+                  <button type="submit" class="ml-4" style="background: #FF7F3F; border: 0; border-radius: 10px; z-index: 2; height: 100%;">></button>
+                </form>';
+              }
             }elseif($row['status'] === 'Verification'){
               echo '<button class="ml-4" style="background: #E3C629; border: 0; border-radius: 10px; z-index: 2; height: 100%;">Validation</button>';
-            }elseif($row['status'] === 'DOnes'){
+            }elseif($row['status'] === 'Done'){
               echo '<button class="ml-4" style="background: #38F378; border: 0; border-radius: 10px; z-index: 2; height: 100%;">Done</button>';
             }
             ?>

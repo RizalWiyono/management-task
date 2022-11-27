@@ -21,9 +21,20 @@ if($type_value === "Point"){
     $value_salary = 0;
 }
 
-mysqli_query($connect, "INSERT INTO tb_task 
-( idtask, idboards, title, startdate, description, deadline, priority, status, link_file, point, salary) 
-values 
-(null, $idboards, '$title', '$startdate', '$desc', '$deadline', '$type_priority', 'Publish', '-', $value_point, $value_salary)");
+$queryTask  = mysqli_query($connect, "SELECT MAX(flow) as flow FROM tb_task WHERE idboards=$idboards");
+while($row = mysqli_fetch_array($queryTask)){
+    if($row['flow']) {
+        $maxFlow = $row['flow']+1;
+    }else{
+        $maxFlow = 1;
+    }
+}
 
-header("location: ../?process=success");
+// echo $maxFlow;
+
+mysqli_query($connect, "INSERT INTO tb_task 
+( idtask, idboards, title, startdate, description, deadline, priority, status, link_file, point, salary, flow) 
+values 
+(null, $idboards, '$title', '$startdate', '$desc', '$deadline', '$type_priority', 'Publish', '-', $value_point, $value_salary, $maxFlow)");
+
+header("location: ../?id=".$idboards."&&process=success");
