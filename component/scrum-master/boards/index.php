@@ -80,7 +80,7 @@
       </div>
       <?php
         $no = 1;
-        $queryTask  = mysqli_query($connect, "SELECT * FROM tb_boards");
+        $queryTask  = mysqli_query($connect, "SELECT * FROM tb_boards INNER JOIN tb_client ON tb_boards.idboards = tb_client.idboards");
         while($row = mysqli_fetch_array($queryTask)){?>
         <div class="card-task d-block p-4 mb-3">
           <div class="component-left-decoration" style="background: #ED3C3C;">
@@ -110,7 +110,7 @@
               
               <div class="component ml-2" style="text-align: left;">
                   <h2>Owner</h2>
-                  <span style="color: #548CFF;"><?=$row['owner']?></span>
+                  <span style="color: #548CFF;"><?=$row['owner_name']?></span>
               </div>
             </div>
             <div class="d-flex right-side-card">
@@ -179,6 +179,14 @@
             <div class="form-group">
               <label for="exampleInputEmail1">Owner</label>
               <input type="text" name="owner" class="form-control" id="exampleFormControlInput1" placeholder="Owner name here...">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Company Name</label>
+              <input type="text" name="company" class="form-control" id="exampleFormControlInput1" placeholder="Company name here...">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">No. Telp</label>
+              <input type="number" name="no_telp" class="form-control" id="exampleFormControlInput1" placeholder="No telp here...">
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Address</label>

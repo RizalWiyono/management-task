@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2022 at 04:06 AM
+-- Generation Time: Nov 30, 2022 at 06:27 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -58,10 +58,6 @@ CREATE TABLE `tb_boards` (
   `description` text NOT NULL,
   `startdate` date NOT NULL,
   `deadline` date NOT NULL,
-  `owner` varchar(100) NOT NULL,
-  `address` text NOT NULL,
-  `no_telp` int(15) NOT NULL,
-  `email` varchar(100) NOT NULL,
   `pay_status` varchar(45) NOT NULL,
   `price` bigint(20) NOT NULL,
   `status` varchar(45) NOT NULL
@@ -71,9 +67,31 @@ CREATE TABLE `tb_boards` (
 -- Dumping data for table `tb_boards`
 --
 
-INSERT INTO `tb_boards` (`idboards`, `title`, `description`, `startdate`, `deadline`, `owner`, `address`, `no_telp`, `email`, `pay_status`, `price`, `status`) VALUES
-(1, 'xxx', 'xxx', '2022-11-02', '2022-11-16', 'zzz', '', 0, '', 'Belum Lunas', 0, 'On Progress'),
-(2, 'zxc', 'asd', '2022-11-09', '2022-11-17', 'zzz', '', 0, '', 'Lunas', 0, 'On Progress');
+INSERT INTO `tb_boards` (`idboards`, `title`, `description`, `startdate`, `deadline`, `pay_status`, `price`, `status`) VALUES
+(1, 'asdasd', 'asdasd', '2022-12-13', '2022-12-14', 'Lunas', 222222, 'On Progress');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_client`
+--
+
+CREATE TABLE `tb_client` (
+  `idclient` int(11) NOT NULL,
+  `idboards` int(11) NOT NULL,
+  `owner_name` varchar(100) NOT NULL,
+  `address` text NOT NULL,
+  `no_telp` int(15) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `company_name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_client`
+--
+
+INSERT INTO `tb_client` (`idclient`, `idboards`, `owner_name`, `address`, `no_telp`, `email`, `company_name`) VALUES
+(1, 1, 'zzz', 'adsasdasd', 23123, 'muhammadrizalwiyono@gmail.com', 'Creative Studio');
 
 -- --------------------------------------------------------
 
@@ -237,6 +255,12 @@ ALTER TABLE `tb_boards`
   ADD PRIMARY KEY (`idboards`);
 
 --
+-- Indexes for table `tb_client`
+--
+ALTER TABLE `tb_client`
+  ADD PRIMARY KEY (`idclient`);
+
+--
 -- Indexes for table `tb_contribution`
 --
 ALTER TABLE `tb_contribution`
@@ -305,6 +329,12 @@ ALTER TABLE `tb_account`
 --
 ALTER TABLE `tb_boards`
   MODIFY `idboards` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tb_client`
+--
+ALTER TABLE `tb_client`
+  MODIFY `idclient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tb_contribution`
