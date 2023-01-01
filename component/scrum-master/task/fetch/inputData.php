@@ -9,6 +9,8 @@ $deadline = $_POST["deadline"];
 $idboards = $_POST["idboards"];
 $type_priority = $_POST["type_priority"];
 $type_value = $_POST["type_value"];
+$flowTask = $_POST["flowTask"];
+$flow_arr = $_POST["flow_arr"];
 
 if($type_value === "Point"){
     $value_point = $_POST["point_value"];
@@ -30,11 +32,17 @@ while($row = mysqli_fetch_array($queryTask)){
     }
 }
 
+if($flowTask) {
+    $flowTask = $flow_arr;
+}else{
+    $flowTask = 'OFF';
+}
+
 // echo $maxFlow;
 
 mysqli_query($connect, "INSERT INTO tb_task 
-( idtask, idboards, title, startdate, description, deadline, priority, status, link_file, point, salary, flow) 
+( idtask, idboards, title, startdate, description, deadline, priority, status, link_file, point, salary, flow, task_done_flow) 
 values 
-(null, $idboards, '$title', '$startdate', '$desc', '$deadline', '$type_priority', 'Publish', '-', $value_point, $value_salary, $maxFlow)");
+(null, $idboards, '$title', '$startdate', '$desc', '$deadline', '$type_priority', 'Publish', '-', $value_point, $value_salary, $maxFlow, '$flowTask')");
 
 header("location: ../?id=".$idboards."&&process=success");

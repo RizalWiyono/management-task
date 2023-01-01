@@ -16,29 +16,29 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 	<!-- Style -->
 	<link rel="stylesheet" type="text/css" href="../../../src/css/style.css">
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
 
-    <!-- Bootstrap core CSS -->
-    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-    .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
+  <style>
+  .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+  }
 
-    @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-        }
-    }
-    </style>
-    <!-- Custom styles for this template -->
-    <link href="../../../src/css/dashboard.css" rel="stylesheet">
+  @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+      }
+  }
+  </style>
+  <!-- Custom styles for this template -->
+  <link href="../../../src/css/dashboard.css" rel="stylesheet">
 </head>
 
 <body>
@@ -252,18 +252,13 @@
             <div class="form-group">
               <label for="exampleInputEmail1">Priority</label>
               <div class="d-flex">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="type_priority" id="inlineRadio1" value="Low">
-                  <label class="form-check-label" for="inlineRadio1">Low</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="type_priority" id="inlineRadio2" value="Medium">
-                  <label class="form-check-label" for="inlineRadio2">Medium</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="type_priority" id="inlineRadio3" value="Hard">
-                  <label class="form-check-label" for="inlineRadio3">Hard</label>
-                </div>
+                <?php $queryPriority  = mysqli_query($connect, "SELECT * FROM `tb_priority_master`");
+                while($row = mysqli_fetch_array($queryPriority)){ ?>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="type_priority" id="<?=$row['idpriority']?>" value="<?=$row['priority']?>">
+                    <label class="form-check-label" for="<?=$row['idpriority']?>"><?=$row['priority']?></label>
+                  </div>
+                <?php } ?>
               </div>
             </div>
             <div class="form-group">
@@ -289,6 +284,22 @@
                 <input type="number" name="salary_value" class="form-control" id="exampleFormControlInput1">
               </div>
             </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Use Flow Task</label>
+              <div class="custom-control custom-switch">
+                <input type="checkbox" onclick="flow_task_done(this)" name="flowTask" class="custom-control-input" id="customSwitch1">
+                <label class="custom-control-label" for="customSwitch1">Flow Task</label>
+              </div>
+              <textarea style="display: none;" name="flow_arr" id="area_task" cols="30" rows="10"></textarea>
+              <select class="form-control mt-3" id="select_flow" style="display: none;" onchange="addFlow(this)">
+                <?php 
+                $id = $_GET['id'];
+                $queryTask  = mysqli_query($connect, "SELECT * FROM `tb_task` WHERE idboards = $id");
+                while($row = mysqli_fetch_array($queryTask)){ ?>
+                  <option value="<?=$row['idtask']?>"><?=$row['title']?></option>
+                <?php } ?>
+              </select>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -312,6 +323,23 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 <script>
+  function flow_task_done(evt) {
+    var checkBox = document.getElementById('customSwitch1');
+    if(checkBox.checked === true) {
+      document.getElementById('select_flow').style.display = 'block'
+    }else{
+      document.getElementById('select_flow').style.display = 'none'
+    }
+  }
+
+  function addFlow(evt) {
+    const taskOld = document.getElementById('area_task').value
+    var array = JSON.parse("[" + taskOld + "]");
+    array.push(evt.value)
+    document.getElementById('area_task').value = array
+    const task = document.getElementById('area_task').value
+  }
+
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })
