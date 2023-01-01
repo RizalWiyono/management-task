@@ -84,7 +84,7 @@
         $no = 1;
         $queryTask  = mysqli_query($connect, "SELECT * FROM tb_task WHERE idboards=$idboards");
         while($row = mysqli_fetch_array($queryTask)){?>
-        <div class="card-task p-4">
+        <div class="card-task p-4 mt-2">
           <div class="component-left-decoration">
             
           </div>
@@ -118,7 +118,8 @@
                 </button>
                 <?php
                 $no = 1;
-                $queryContributon  = mysqli_query($connect, "SELECT * FROM tb_contribution INNER JOIN tb_account ON tb_contribution.idaccount = tb_account.idaccount;");
+                $idTask = $row['idtask'];
+                $queryContributon  = mysqli_query($connect, "SELECT * FROM tb_contribution INNER JOIN tb_account ON tb_contribution.idaccount = tb_account.idaccount WHERE idtask = $idTask;");
                 while($rowContributon = mysqli_fetch_array($queryContributon)){?>
                 <div class="mr-2">
                   <img data-toggle="tooltip" data-placement="left" data-html="true" title="<em><?=$rowContributon['name']?></em>"
