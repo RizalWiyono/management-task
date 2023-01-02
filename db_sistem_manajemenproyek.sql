@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 01, 2023 at 06:31 PM
+-- Generation Time: Jan 02, 2023 at 02:34 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_sistem_manajemenproyek`
+-- Database: `db_task`
 --
 
 -- --------------------------------------------------------
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `tb_account` (
   `idaccount` int(11) NOT NULL,
-  `idorganization` int(11) DEFAULT NULL,
+  `idorganization` int(11) NOT NULL,
   `username` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
@@ -44,9 +44,13 @@ CREATE TABLE `tb_account` (
 --
 
 INSERT INTO `tb_account` (`idaccount`, `idorganization`, `username`, `email`, `password`, `name`, `photos`, `role`) VALUES
-(1, 1, 'asd', 'user@gmail.com', '7815696ecbf1c96e6894b779456d330e', 'asd', '-', 'Scrum Master'),
-(2, 1, 'angelinasond', 'angelina@gmail.com', '202cb962ac59075b964b07152d234b70', 'Angelina Sondakh', '', 'Employee'),
-(3, NULL, 'alexandre', 'alexandre@gmail.com', '534b44a19bf18d20b71ecc4eb77c572f', 'Alex Andra', '', 'Employee');
+(1, 1, 'bukuwarung', 'bukuwarung@gmail.com', 'fdc2c485ed6115874842c7b54114e53e', 'Admin Buku Warung', '-', 'Admin'),
+(2, 2, 'majoo.id', 'majoo@gmail.com', 'ed2cc0e2b7c1c1ebcbc1366f0a9ba807', 'Admin Majoo', '-', 'Admin'),
+(3, 2, 'farhan.aditya', 'farhan.aditya@gmail.com', '1ac5012170b65fb99f171ad799d045ac', 'Farhan Aditya', '-', 'PM'),
+(4, 2, 'rifai', 'rifai@gmail.com', '04d190f80d74452c2b8b05b5898b77df', 'Rifai', '-', 'PM'),
+(5, 2, 'rizky.wepe', 'wepe@gmail.com', 'ad681ae7f335b21795b2d5ac3ec97554', 'Rizky Wepe', '-', 'Employee'),
+(6, 2, 'ach_rofiqi', 'achrofiqi@gmail.com', '75295a1c8ba69ba83b941679d9a9711e', 'Ach. Rofiqi', '-', 'Employee'),
+(7, 2, 'lelypuspita', 'lelypuspita@gmail.com', 'e0383b0e9f4d15556fea4c93f548b6ce', 'Lely Puspita Sari', '-', 'Employee');
 
 -- --------------------------------------------------------
 
@@ -56,21 +60,24 @@ INSERT INTO `tb_account` (`idaccount`, `idorganization`, `username`, `email`, `p
 
 CREATE TABLE `tb_boards` (
   `idboards` int(11) NOT NULL,
+  `idclient` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
   `description` text NOT NULL,
-  `startdate` date NOT NULL,
+  `plan_date` date NOT NULL,
+  `start_date` date NOT NULL,
   `deadline` date NOT NULL,
   `pay_status` varchar(45) NOT NULL,
-  `price` bigint(20) NOT NULL,
-  `status` varchar(45) NOT NULL
+  `status` varchar(45) NOT NULL,
+  `project_price` int(11) NOT NULL,
+  `end_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_boards`
 --
 
-INSERT INTO `tb_boards` (`idboards`, `title`, `description`, `startdate`, `deadline`, `pay_status`, `price`, `status`) VALUES
-(1, 'Web Task Management', 'Website yang memiliki fungsi untuk memanajemen tugas', '2022-09-17', '2023-01-02', 'Lunas', 2000000, 'On Progress');
+INSERT INTO `tb_boards` (`idboards`, `idclient`, `title`, `description`, `plan_date`, `start_date`, `deadline`, `pay_status`, `status`, `project_price`, `end_date`) VALUES
+(1, 1, 'AUTOMAN', 'Website kasir menggunakan kecerdasan buatan Face Recognition', '2022-01-05', '2022-01-10', '2022-03-10', 'Lunas', 'On Progress', 3500000, '2022-03-10');
 
 -- --------------------------------------------------------
 
@@ -80,20 +87,19 @@ INSERT INTO `tb_boards` (`idboards`, `title`, `description`, `startdate`, `deadl
 
 CREATE TABLE `tb_client` (
   `idclient` int(11) NOT NULL,
-  `idboards` int(11) NOT NULL,
   `owner_name` varchar(100) NOT NULL,
   `address` text NOT NULL,
-  `no_telp` int(15) NOT NULL,
+  `no_telp` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
   `company_name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_client`
 --
 
-INSERT INTO `tb_client` (`idclient`, `idboards`, `owner_name`, `address`, `no_telp`, `email`, `company_name`) VALUES
-(1, 1, 'Daniel Julian', 'Universitas Surabaya', 666, 'developer@gmail.com', 'UBAYA');
+INSERT INTO `tb_client` (`idclient`, `owner_name`, `address`, `no_telp`, `email`, `company_name`) VALUES
+(1, 'UMM', 'Jl. Bendungan Sutami No.188, Sumbersari, Kec. Lowokwaru, Kota Malang, Jawa Timur 65145', 341551149, 'humas@umm.ac.id', 'UMM');
 
 -- --------------------------------------------------------
 
@@ -113,36 +119,8 @@ CREATE TABLE `tb_contribution` (
 --
 
 INSERT INTO `tb_contribution` (`idcontribution`, `idaccount`, `idtask`, `status`) VALUES
-(1, 1, 2, ' '),
-(2, 2, 2, ' '),
-(4, 1, 4, ' ');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tb_history`
---
-
-CREATE TABLE `tb_history` (
-  `idactivity` int(11) NOT NULL,
-  `idaccount` int(11) DEFAULT NULL,
-  `activity` text,
-  `date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tb_note`
---
-
-CREATE TABLE `tb_note` (
-  `idnote` int(11) NOT NULL,
-  `idaccount` int(11) NOT NULL,
-  `title` varchar(100) NOT NULL,
-  `description` text NOT NULL,
-  `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(2, 5, 2, ' '),
+(3, 7, 2, ' ');
 
 -- --------------------------------------------------------
 
@@ -152,16 +130,22 @@ CREATE TABLE `tb_note` (
 
 CREATE TABLE `tb_organization` (
   `idorganization` int(11) NOT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `company_service_type` varchar(100) DEFAULT NULL,
-  `address` text,
-  `link_photo` text,
-  `no_telp` int(11) DEFAULT NULL,
+  `name` varchar(100) NOT NULL,
+  `company_service_type` varchar(100) NOT NULL,
+  `address` text NOT NULL,
+  `link_photo` text NOT NULL,
+  `no_telp` int(11) NOT NULL,
   `website` text,
-  `email` varchar(100) DEFAULT NULL,
-  `username` varchar(100) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL
+  `email` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_organization`
+--
+
+INSERT INTO `tb_organization` (`idorganization`, `name`, `company_service_type`, `address`, `link_photo`, `no_telp`, `website`, `email`) VALUES
+(1, 'Buku Warung', 'Product', 'Kawasan, Sopo Del Tower B, 22nd Floor Jl. Mega Kuningan Barat III Lot 10. 1-6, Kuningan, Daerah Khusus Ibukota Jakarta 12950', '-', 2147483647, 'https://bukuwarung.com/', 'bukuwarung@gmail.com'),
+(2, 'Majoo', 'Product', 'Jl. Prapanca Raya No.25 Jakarta - Indonesia, 12160', '-', 1500460, 'https://majoo.id/', 'majoo@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -171,9 +155,10 @@ CREATE TABLE `tb_organization` (
 
 CREATE TABLE `tb_payroll` (
   `idpayroll` int(11) NOT NULL,
-  `idaccount` int(11) NOT NULL,
   `idtask` int(11) NOT NULL,
+  `idtarget` int(11) NOT NULL,
   `salary` int(11) NOT NULL,
+  `total_salary_earned` bigint(20) NOT NULL,
   `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -185,9 +170,9 @@ CREATE TABLE `tb_payroll` (
 
 CREATE TABLE `tb_point` (
   `idpoint` int(11) NOT NULL,
-  `idaccount` int(11) NOT NULL,
   `idtask` int(11) NOT NULL,
-  `idtargetPoint` int(11) NOT NULL,
+  `idpriority` int(11) NOT NULL,
+  `idtarget` int(11) NOT NULL,
   `point` int(11) NOT NULL,
   `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -202,7 +187,7 @@ CREATE TABLE `tb_priority_master` (
   `idpriority` int(11) NOT NULL,
   `priority` varchar(45) NOT NULL,
   `priority_point` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_priority_master`
@@ -222,6 +207,7 @@ INSERT INTO `tb_priority_master` (`idpriority`, `priority`, `priority_point`) VA
 CREATE TABLE `tb_report` (
   `idreport` int(11) NOT NULL,
   `idaccount` int(11) NOT NULL,
+  `idboards` int(11) NOT NULL,
   `description` text NOT NULL,
   `date` datetime NOT NULL,
   `status` varchar(45) NOT NULL
@@ -230,15 +216,27 @@ CREATE TABLE `tb_report` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_target_point`
+-- Table structure for table `tb_target`
 --
 
-CREATE TABLE `tb_target_point` (
-  `idtargetPoint` int(11) NOT NULL,
-  `totaltarget` int(11) NOT NULL,
-  `date` datetime NOT NULL,
+CREATE TABLE `tb_target` (
+  `idtarget` int(11) NOT NULL,
+  `idaccount` int(11) NOT NULL,
+  `total_target` int(11) NOT NULL,
+  `date` varchar(45) NOT NULL,
   `status` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_target`
+--
+
+INSERT INTO `tb_target` (`idtarget`, `idaccount`, `total_target`, `date`, `status`) VALUES
+(1, 4, 1400, '2023-01', 'Process'),
+(2, 3, 1000, '2023-01', 'Process'),
+(3, 5, 1270, '2023-01', 'Process'),
+(4, 6, 1100, '2023-01', 'Process'),
+(5, 7, 1400, '2023-01', 'Process');
 
 -- --------------------------------------------------------
 
@@ -249,32 +247,27 @@ CREATE TABLE `tb_target_point` (
 CREATE TABLE `tb_task` (
   `idtask` int(11) NOT NULL,
   `idboards` int(11) NOT NULL,
+  `idpriority` int(11) NOT NULL,
   `title` varchar(45) NOT NULL,
-  `startdate` date NOT NULL,
+  `plan_date` date NOT NULL,
+  `start_date` date NOT NULL,
   `description` text NOT NULL,
   `deadline` date NOT NULL,
-  `priority` varchar(45) NOT NULL,
   `status` varchar(45) NOT NULL,
   `link_file` text NOT NULL,
-  `point` int(11) DEFAULT NULL,
-  `salary` int(11) DEFAULT NULL,
-  `flow` bigint(20) NOT NULL,
-  `task_done_flow` text NOT NULL
+  `end_date` date NOT NULL,
+  `point` int(11) NOT NULL,
+  `salary` int(11) NOT NULL,
+  `flow` int(11) NOT NULL,
+  `task_done_flow` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_task`
 --
 
-INSERT INTO `tb_task` (`idtask`, `idboards`, `title`, `startdate`, `description`, `deadline`, `priority`, `status`, `link_file`, `point`, `salary`, `flow`, `task_done_flow`) VALUES
-(1, 1, 'UI Login', '2022-09-23', 'Desain UI bagian login', '2022-09-25', 'Low', 'Publish', '-', 200, 0, 1, 'OFF'),
-(2, 1, 'UI Dashboard', '2022-09-27', 'Desain UI Dashboard', '2022-09-29', 'Medium', 'Publish', '-', 150, 0, 2, 'OFF'),
-(3, 1, 'UI Boards', '2022-10-01', 'Desain UI Boards', '2022-10-03', 'Medium', 'Publish', '-', 150, 0, 3, '2'),
-(4, 1, 'API Input Boards', '2022-10-01', 'REST API Input Boards', '2022-10-05', 'High', 'Publish', '-', 300, 0, 4, 'OFF'),
-(5, 1, 'API Input Task', '2022-10-06', '', '2022-10-10', 'High', 'Publish', '-', 300, 0, 5, '4'),
-(6, 1, 'Integrate API Boards', '2022-10-06', 'Integrasi API boards', '2022-10-10', 'High', 'Publish', '-', 200, 0, 6, 'OFF'),
-(7, 1, 'Integrasi API Task', '2022-10-11', 'Integrasi API Task', '2022-10-15', 'High', 'Publish', '-', 250, 0, 7, '6'),
-(8, 1, 'UI Task', '2022-09-05', '', '2022-09-10', 'Medium', 'Publish', '-', 100, 0, 8, '2,3,1');
+INSERT INTO `tb_task` (`idtask`, `idboards`, `idpriority`, `title`, `plan_date`, `start_date`, `description`, `deadline`, `status`, `link_file`, `end_date`, `point`, `salary`, `flow`, `task_done_flow`) VALUES
+(2, 1, 2, 'Flowchart', '2022-01-10', '2022-01-10', 'Flowchart AUTOMAN', '2022-01-12', 'Publish', '-', '2022-01-13', 100, 0, 1, 'OFF');
 
 -- --------------------------------------------------------
 
@@ -284,11 +277,11 @@ INSERT INTO `tb_task` (`idtask`, `idboards`, `title`, `startdate`, `description`
 
 CREATE TABLE `tb_wallet_point` (
   `idwalletpoint` int(11) NOT NULL,
-  `idpayroll` int(11) NOT NULL,
+  `idpoint` int(11) NOT NULL,
   `idaccount` int(11) NOT NULL,
-  `total_point` bigint(20) NOT NULL,
+  `total_point_earned` int(11) NOT NULL,
   `date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -300,9 +293,9 @@ CREATE TABLE `tb_wallet_salary` (
   `idwalletsalary` int(11) NOT NULL,
   `idpayroll` int(11) NOT NULL,
   `idaccount` int(11) NOT NULL,
-  `total_salary` bigint(20) NOT NULL,
+  `total_salary_earned` bigint(20) NOT NULL,
   `date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -312,13 +305,15 @@ CREATE TABLE `tb_wallet_salary` (
 -- Indexes for table `tb_account`
 --
 ALTER TABLE `tb_account`
-  ADD PRIMARY KEY (`idaccount`);
+  ADD PRIMARY KEY (`idaccount`),
+  ADD KEY `fk_tb_account_tb_organization1_idx` (`idorganization`);
 
 --
 -- Indexes for table `tb_boards`
 --
 ALTER TABLE `tb_boards`
-  ADD PRIMARY KEY (`idboards`);
+  ADD PRIMARY KEY (`idboards`),
+  ADD KEY `fk_tb_boards_tb_client1_idx` (`idclient`);
 
 --
 -- Indexes for table `tb_client`
@@ -333,18 +328,6 @@ ALTER TABLE `tb_contribution`
   ADD PRIMARY KEY (`idcontribution`);
 
 --
--- Indexes for table `tb_history`
---
-ALTER TABLE `tb_history`
-  ADD PRIMARY KEY (`idactivity`);
-
---
--- Indexes for table `tb_note`
---
-ALTER TABLE `tb_note`
-  ADD PRIMARY KEY (`idnote`);
-
---
 -- Indexes for table `tb_organization`
 --
 ALTER TABLE `tb_organization`
@@ -354,13 +337,18 @@ ALTER TABLE `tb_organization`
 -- Indexes for table `tb_payroll`
 --
 ALTER TABLE `tb_payroll`
-  ADD PRIMARY KEY (`idpayroll`);
+  ADD PRIMARY KEY (`idpayroll`),
+  ADD KEY `fk_tb_payroll_tb_task1_idx` (`idtask`),
+  ADD KEY `fk_tb_payroll_tb_target_point1_idx` (`idtarget`);
 
 --
 -- Indexes for table `tb_point`
 --
 ALTER TABLE `tb_point`
-  ADD PRIMARY KEY (`idpoint`);
+  ADD PRIMARY KEY (`idpoint`),
+  ADD KEY `fk_tb_point_tb_task1_idx` (`idtask`),
+  ADD KEY `fk_tb_point_tb_priority_master1_idx` (`idpriority`),
+  ADD KEY `fk_tb_point_tb_target_point1_idx` (`idtarget`);
 
 --
 -- Indexes for table `tb_priority_master`
@@ -372,31 +360,40 @@ ALTER TABLE `tb_priority_master`
 -- Indexes for table `tb_report`
 --
 ALTER TABLE `tb_report`
-  ADD PRIMARY KEY (`idreport`);
+  ADD PRIMARY KEY (`idreport`),
+  ADD KEY `fk_tb_report_tb_account1_idx` (`idaccount`),
+  ADD KEY `fk_tb_report_tb_boards1_idx` (`idboards`);
 
 --
--- Indexes for table `tb_target_point`
+-- Indexes for table `tb_target`
 --
-ALTER TABLE `tb_target_point`
-  ADD PRIMARY KEY (`idtargetPoint`);
+ALTER TABLE `tb_target`
+  ADD PRIMARY KEY (`idtarget`),
+  ADD KEY `fk_tb_target_point_tb_account1_idx` (`idaccount`);
 
 --
 -- Indexes for table `tb_task`
 --
 ALTER TABLE `tb_task`
-  ADD PRIMARY KEY (`idtask`);
+  ADD PRIMARY KEY (`idtask`),
+  ADD KEY `fk_tb_task_tb_boards1_idx` (`idboards`),
+  ADD KEY `fk_tb_task_tb_priority_master1_idx` (`idpriority`);
 
 --
 -- Indexes for table `tb_wallet_point`
 --
 ALTER TABLE `tb_wallet_point`
-  ADD PRIMARY KEY (`idwalletpoint`);
+  ADD PRIMARY KEY (`idwalletpoint`,`idpoint`,`idaccount`),
+  ADD KEY `fk_tb_point_has_tb_account_tb_account1_idx` (`idaccount`),
+  ADD KEY `fk_tb_point_has_tb_account_tb_point1_idx` (`idpoint`);
 
 --
 -- Indexes for table `tb_wallet_salary`
 --
 ALTER TABLE `tb_wallet_salary`
-  ADD PRIMARY KEY (`idwalletsalary`);
+  ADD PRIMARY KEY (`idwalletsalary`,`idpayroll`,`idaccount`),
+  ADD KEY `fk_tb_payroll_has_tb_account_tb_account1_idx` (`idaccount`),
+  ADD KEY `fk_tb_payroll_has_tb_account_tb_payroll1_idx` (`idpayroll`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -406,7 +403,7 @@ ALTER TABLE `tb_wallet_salary`
 -- AUTO_INCREMENT for table `tb_account`
 --
 ALTER TABLE `tb_account`
-  MODIFY `idaccount` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idaccount` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tb_boards`
@@ -415,28 +412,16 @@ ALTER TABLE `tb_boards`
   MODIFY `idboards` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `tb_client`
---
-ALTER TABLE `tb_client`
-  MODIFY `idclient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `tb_contribution`
 --
 ALTER TABLE `tb_contribution`
-  MODIFY `idcontribution` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idcontribution` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `tb_note`
+-- AUTO_INCREMENT for table `tb_organization`
 --
-ALTER TABLE `tb_note`
-  MODIFY `idnote` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tb_point`
---
-ALTER TABLE `tb_point`
-  MODIFY `idpoint` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tb_organization`
+  MODIFY `idorganization` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_priority_master`
@@ -445,28 +430,16 @@ ALTER TABLE `tb_priority_master`
   MODIFY `idpriority` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `tb_target_point`
+-- AUTO_INCREMENT for table `tb_target`
 --
-ALTER TABLE `tb_target_point`
-  MODIFY `idtargetPoint` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tb_target`
+  MODIFY `idtarget` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_task`
 --
 ALTER TABLE `tb_task`
-  MODIFY `idtask` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `tb_wallet_point`
---
-ALTER TABLE `tb_wallet_point`
-  MODIFY `idwalletpoint` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tb_wallet_salary`
---
-ALTER TABLE `tb_wallet_salary`
-  MODIFY `idwalletsalary` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idtask` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
