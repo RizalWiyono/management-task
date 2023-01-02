@@ -1,5 +1,7 @@
 <?php
     include '../../../src/connection/connection.php';
+    session_start();
+    $idOrganization = $_SESSION['idorganization'];
     $idboards = $_GET['id'];
 ?>
 <!DOCTYPE html>
@@ -55,7 +57,12 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active d-flex align-items-center" href="#">
+            <a class="nav-link d-flex align-items-center" href="../target">
+              <span class="mr-3" data-feather="users"></span>
+              Target Point
+            </a>
+          <li class="nav-item">
+            <a class="nav-link active d-flex align-items-center" href="../boards">
               <span class="mr-3" data-feather="bar-chart-2"></span>
               Boards
             </a>
@@ -82,7 +89,7 @@
       </div>
       <?php
         $no = 1;
-        $queryTask  = mysqli_query($connect, "SELECT * FROM tb_task WHERE idboards=$idboards");
+        $queryTask  = mysqli_query($connect, "SELECT * FROM tb_task INNER JOIN tb_priority_master ON tb_task.idpriority = tb_priority_master.idpriority WHERE idboards=$idboards");
         while($row = mysqli_fetch_array($queryTask)){?>
         <div class="card-task p-4 mt-2">
           <div class="component-left-decoration">
@@ -147,7 +154,7 @@
                   <form action="fetch/addMember.php" method="POST">
                     <?php
                     $no = 1;
-                    $queryEmployee  = mysqli_query($connect, "SELECT * FROM tb_account");
+                    $queryEmployee  = mysqli_query($connect, "SELECT * FROM tb_account WHERE idorganization=$idOrganization AND role!='Admin'");
                     while($rowEmployee = mysqli_fetch_array($queryEmployee)){?>
                       <label for="contribution<?=$rowEmployee['idaccount']?>" class="d-flex align-items-center">
                         <input type="radio" id="contribution<?=$rowEmployee['idaccount']?>" value="<?=$rowEmployee['idaccount']?>" name="idaccount" class="mr-2">
@@ -157,6 +164,7 @@
                         height: 25px;
                         object-fit: cover;
                         border-radius: 100px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/No_image_%28male%29.svg/450px-No_image_%28male%29.svg.png" alt="" srcset="">
+                        <span class="ml-2"><?=$rowEmployee['name']?></span>
                       </label>
                     <?php } ?>
 
@@ -173,7 +181,7 @@
           <div class="d-flex right-side-car">
             <div class="component">
               <h2>Startdate</h2>
-              <span style="color: #548CFF;"><?=$row['startdate']?></span>
+              <span style="color: #548CFF;"><?=$row['start_date']?></span>
             </div>
             <div class="ml-4 component">
               <h2>Deadline</h2>
@@ -229,8 +237,7 @@
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Description</label>
-              <textarea name="desc" id="" class="form-control" rows="3">Task description here...
-              </textarea>
+              <textarea name="desc" id="" class="form-control" rows="3"></textarea>
             </div>
             <div class="row">
               <div class="col-md-12">
@@ -250,13 +257,31 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Plan Date</label>
+                      <input type="date" name="plan_date" class="form-control" id="exampleFormControlInput1" placeholder="Title task here...">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">End Date</label>
+                      <input type="date" name="end_date" class="form-control" id="exampleFormControlInput1" placeholder="Title task here...">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Priority</label>
               <div class="d-flex">
                 <?php $queryPriority  = mysqli_query($connect, "SELECT * FROM `tb_priority_master`");
                 while($row = mysqli_fetch_array($queryPriority)){ ?>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="type_priority" id="<?=$row['idpriority']?>" value="<?=$row['priority']?>">
+                    <input class="form-check-input" type="radio" name="type_priority" id="<?=$row['idpriority']?>" value="<?=$row['idpriority']?>">
                     <label class="form-check-label" for="<?=$row['idpriority']?>"><?=$row['priority']?></label>
                   </div>
                 <?php } ?>

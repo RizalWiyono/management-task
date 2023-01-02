@@ -15,31 +15,19 @@
             $_SESSION['password'] = $data['password']; 
             $_SESSION['email'] = $data['email']; 
             $_SESSION['idaccount'] = $data['idaccount']; 
+            $_SESSION['idorganization'] = $data['idorganization']; 
             $_SESSION['role'] = $data['role']; 
             $idAkun = $data['idaccount'];
 
             if($data['role'] == 'Employee') {
                 header("location: ../../user/boards/");   
-            }elseif($data['role'] == 'Scrum Master'){
+            }elseif($data['role'] == 'PM'){
                 header("location: ../../scrum-master/boards/");
-            }
-        }else{ 
-            $sqlAdmin = $pdo->prepare("SELECT * FROM tb_organization WHERE email=:a AND password=:b");
-            $sqlAdmin->bindParam(':a', $email);
-            $sqlAdmin->bindParam(':b', $password);
-            $sqlAdmin->execute(); 
-            
-            $dataAdmin = $sqlAdmin->fetch();
-
-            if( !empty($dataAdmin)){ 
-                $_SESSION['password'] = $data['password']; 
-                $_SESSION['email'] = $data['email']; 
-                $_SESSION['idorganization'] = $data['idorganization'];
-
+            }elseif($data['role'] == 'Admin'){
                 header("location: ../../admin/add-employee/");   
-            }else{ 
-                header("location: ../login.php?process=failed");
             }
+        }else{  
+            header("location: ../login.php?process=failed");
         }
 
 ?>

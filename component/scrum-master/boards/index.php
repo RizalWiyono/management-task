@@ -45,6 +45,7 @@
   <div class="row">
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
       <div class="sidebar-sticky">
+        <h1 class="title-logo mb-4">TaskManager.</h1>
         <ul class="nav flex-column">
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center" href="../home/">
@@ -53,7 +54,12 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active d-flex align-items-center" href="#">
+            <a class="nav-link d-flex align-items-center" href="../target">
+              <span class="mr-3" data-feather="users"></span>
+              Target Point
+            </a>
+          <li class="nav-item">
+            <a class="nav-link active d-flex align-items-center" href="../boards">
               <span class="mr-3" data-feather="bar-chart-2"></span>
               Boards
             </a>
@@ -80,7 +86,7 @@
       </div>
       <?php
         $no = 1;
-        $queryTask  = mysqli_query($connect, "SELECT * FROM tb_boards INNER JOIN tb_client ON tb_boards.idboards = tb_client.idboards");
+        $queryTask  = mysqli_query($connect, "SELECT * FROM tb_boards INNER JOIN tb_client ON tb_boards.idclient = tb_client.idclient");
         while($row = mysqli_fetch_array($queryTask)){?>
         <div class="card-task d-block p-4 mb-3">
           <div class="component-left-decoration" style="background: #ED3C3C;">
@@ -116,7 +122,7 @@
             <div class="d-flex right-side-card">
               <div class="component ml-4" style="text-align: left;">
                 <h2>Startdate</h2>
-                <span style="color: #E3C629;"><?=$row['startdate']?></span>
+                <span style="color: #E3C629;"><?=$row['start_date']?></span>
               </div>
               <div class="component ml-4" style="text-align: left;">
                 <h2>Deadline</h2>
@@ -153,7 +159,7 @@
               </div>
               <div class="component ml-4" style="text-align: left;">
                 <h2>Price</h2>
-                <span style="color: #548CFF;">Rp. <?=$row['price']?></span>
+                <span style="color: #548CFF;">Rp. <?=$row['project_price']?></span>
               </div>
             </div>
           </div>
@@ -223,13 +229,31 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Startdate</label>
-                      <input type="date" name="startdate" class="form-control" id="exampleFormControlInput1" placeholder="Title task here...">
+                      <input type="date" name="startdate" class="form-control" id="exampleFormControlInput1">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Deadline</label>
-                      <input type="date" name="deadline" class="form-control" id="exampleFormControlInput1" placeholder="Title task here...">
+                      <input type="date" name="deadline" class="form-control" id="exampleFormControlInput1">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Plan Date</label>
+                      <input type="date" name="plan_date" class="form-control" id="exampleFormControlInput1">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">End Date</label>
+                      <input type="date" name="end_date" class="form-control" id="exampleFormControlInput1">
                     </div>
                   </div>
                 </div>

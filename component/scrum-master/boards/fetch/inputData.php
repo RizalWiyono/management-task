@@ -5,6 +5,8 @@ include '../../../../src/connection/connection.php';
 $title = $_POST["title"];
 $desc = $_POST["desc"];
 $startdate = $_POST["startdate"];
+$end_date = $_POST["end_date"];
+$plan_date = $_POST["plan_date"];
 $deadline = $_POST["deadline"];
 $price = $_POST["price"];
 $pay_status = $_POST["pay_status"];
@@ -15,7 +17,7 @@ $no_telp = $_POST["no_telp"];
 $company = $_POST["company"];
 $email = $_POST["email"];
 
-$queryIdMax  = mysqli_query($connect, "SELECT MAX(idboards) as id FROM `tb_boards`");
+$queryIdMax  = mysqli_query($connect, "SELECT MAX(idclient) as id FROM `tb_client`");
 while($row = mysqli_fetch_array($queryIdMax)){
     if($row['id']) {
         $id = 1;
@@ -24,14 +26,15 @@ while($row = mysqli_fetch_array($queryIdMax)){
     }
 }
 
-mysqli_query($connect, "INSERT INTO tb_boards 
-( idboards, title,  description, startdate, deadline, pay_status, price, status) 
-values 
-($id, '$title', '$desc', '$startdate', '$deadline', '$pay_status', $price, 'On Progress')");
-
 mysqli_query($connect, "INSERT INTO tb_client 
-( idclient, idboards,  owner_name, address, no_telp, email, company_name) 
+( idclient, owner_name, address, no_telp, email, company_name) 
 values 
-(null, $id, '$owner', '$address', '$no_telp', '$email', '$company')");
+($id, '$owner', '$address', '$no_telp', '$email', '$company')");
+
+mysqli_query($connect, "INSERT INTO tb_boards 
+( idboards, idclient, title,  description, plan_date, start_date, deadline, pay_status, status, project_price, end_date) 
+values 
+(null, $id, '$title', '$desc', '$plan_date', '$startdate', '$deadline', '$pay_status', 'On Progress', $price, '$end_date')");
+
 
 header("location: ../?process=success");

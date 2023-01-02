@@ -49,27 +49,32 @@
       <div class="sidebar-sticky">
         <h1 class="title-logo mb-4">TaskManager.</h1>
         <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="home"></span>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center" href="../home/">
+              <span class="mr-3" data-feather="home"></span>
               Home
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">
-              <span data-feather="users"></span>
-              Input Employee
+            <a class="nav-link active d-flex align-items-center" href="../target">
+              <span class="mr-3" data-feather="users"></span>
+              Target Point
+            </a>
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center" href="../boards">
+              <span class="mr-3" data-feather="bar-chart-2"></span>
+              Boards
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="bar-chart-2"></span>
-              Report Data
+            <a class="nav-link d-flex align-items-center" href="../send-report/">
+              <span class="mr-3" data-feather="send"></span>
+              Send Report
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file"></span>
+            <a class="nav-link d-flex align-items-center" href="../note/">
+              <span class="mr-3" data-feather="file"></span>
               Note
             </a>
           </li>
@@ -82,29 +87,28 @@
         <h1 class="h2">Input Employee</h1>
       </div>
 
-      <form action="fetch/inputData.php" method="POST">
+      <form action="fetch/addTargetPoint.php" method="POST">
         <div class="row">
-          <div class="form-group col-md-2">
-            <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="Email Address">
-          </div>
-          <div class="form-group col-md-2">
-            <input type="text" name="username" class="form-control" id="exampleFormControlInput1" placeholder="Username">
-          </div>
-          <div class="form-group col-md-2">
-            <input type="password" name="password" class="form-control" id="exampleFormControlInput1" placeholder="Password">
-          </div>
-          <div class="form-group col-md-2">
-            <input type="text" name="name" class="form-control" id="exampleFormControlInput1" placeholder="Employee Name">
-          </div>
-          <div class="form-group col-md-2">
-            <select class="form-control" name="role" id="">
-              <option value="PM">Project Manager</option>
-              <option value="Employee">Employee</option>
-            </select>
-          </div>
-          <div class="form-group col-md-2">
-            <button type="submit" class="btn-linear-primary p-2" style="width: 100%;">Daftarkan</button>
-          </div>
+          <form action="fetch/addTargetPoint.php" method="post">
+            <div class="form-group col-md-4">
+              <input type="number" name="point" class="form-control" id="exampleFormControlInput1" placeholder="Target point here..">
+            </div>
+            <div class="form-group col-md-4">
+              <select class="form-control" name="account" id="">
+              <?php
+              $queryAccount  = mysqli_query($connect, "SELECT * FROM tb_account WHERE idorganization=$idOrganization AND role != 'Admin'");
+              while($row = mysqli_fetch_array($queryAccount)){?>
+                <option value="<?=$row['idaccount']?>"><?=$row['name']?></option>
+              <?php } ?>
+              </select>
+            </div>
+            <div class="form-group col-md-2">
+              <input type="month" name="date" class="form-control" id="exampleFormControlInput1">
+            </div>
+            <div class="form-group col-md-2">
+              <button type="submit" class="btn-linear-primary p-2" style="width: 100%;">Daftarkan</button>
+            </div>
+          </form>
         </div>
       </form>  
       
@@ -113,22 +117,22 @@
           <tr>
             <th scope="col">No.</th>
             <th scope="col">Name</th>
-            <th scope="col">Username</th>
-            <th scope="col">Email</th>
-            <th scope="col">Role</th>
+            <th scope="col">Target Point</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
           </tr>
         </thead>
         <tbody>
           <?php
           $no = 1;
-          $queryAccount  = mysqli_query($connect, "SELECT * FROM tb_account WHERE idorganization=$idOrganization");
+          $queryAccount  = mysqli_query($connect, "SELECT * FROM tb_target INNER JOIN tb_account ON tb_target.idaccount = tb_account.idaccount WHERE idorganization=$idOrganization");
           while($row = mysqli_fetch_array($queryAccount)){?>
           <tr>
             <th scope="row"><?=$no?></th>
             <td><?=$row['name']?></td>
-            <td><?=$row['username']?></td>
-            <td><?=$row['email']?></td>
-            <td><?=$row['role']?></td>
+            <td><?=$row['total_target']?></td>
+            <td><?=$row['date']?></td>
+            <td><?=$row['status']?></td>
           </tr>
           <?php $no++;
           } ?> 

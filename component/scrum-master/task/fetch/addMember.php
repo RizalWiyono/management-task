@@ -9,6 +9,6 @@ $idaccount = $_POST["idaccount"];
 mysqli_query($connect, "INSERT INTO tb_contribution 
 ( idcontribution, idaccount, idtask, status) 
 values 
-(null, $idtask, '$idaccount', ' ')");
+(null, $idaccount, '$idtask', ' ')");
 
 header("location: ../?id=".$idpage);
