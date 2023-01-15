@@ -1,5 +1,5 @@
 <?php
-$connect = mysqli_connect("localhost","root","","db_sistem_manajemenproyek");
+$connect = mysqli_connect("localhost","root","","db_task");
 
 if (mysqli_connect_errno())
 {

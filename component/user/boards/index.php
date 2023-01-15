@@ -48,7 +48,7 @@
         <h1 class="title-logo mb-4">TaskManager.</h1>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center" href="#">
+            <a class="nav-link d-flex align-items-center" href="../home">
               <span class="mr-3" data-feather="home"></span>
               Home
             </a>
@@ -59,12 +59,12 @@
               Boards
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link d-flex align-items-center" href="../note/">
               <span class="mr-3" data-feather="file"></span>
               Note
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </nav>
@@ -75,40 +75,102 @@
       </div>
       <?php
         $no = 1;
-        $queryTask  = mysqli_query($connect, "SELECT * FROM tb_boards INNER JOIN tb_client ON tb_boards.idboards = tb_client.idboards");
+        $queryTask  = mysqli_query($connect, "SELECT * FROM tb_boards INNER JOIN tb_client ON tb_boards.idclient = tb_client.idclient");
         while($row = mysqli_fetch_array($queryTask)){?>
-        <div class="card-task p-4 mb-3">
+        <div class="card-task d-block p-4 mb-3">
           <div class="component-left-decoration" style="background: #ED3C3C;">
             
           </div>
           <div class="component-right-decoration" style="background: linear-gradient(151deg, rgba(255, 0, 0, 0.4) 7.37%, rgba(255, 110, 48, 0.4) 41.97%, rgba(255, 240, 105, 0.4) 71.76%);">
             
           </div>
-          <div class="left-side-card">
-            <h1>
-            <?=$row['title']?>
-            </h1>
-            <h3 style='float: left; margin: 0; color: #FFF069;'><?=$row['status']?></h3>
-            <div>
-              <a href="../task?id=<?=$row['idboards']?>">
-                <button class="px-2 py-1 mt-2" style="background: #FF7F3F; border-radius: 8px; border: 0; color: #FFF; font-weight: 600;">See Task</button>
-              </a>
+          
+          <div class="d-flex align-items-center justify-content-between" style="width: 100%;">
+            <div class="left-side-card">
+              <h1>
+              <?=$row['title']?>
+              </h1>
+              <h3 style='float: left; margin: 0; color: #FFF069;'><?=$row['status']?></h3>
+              <div>
+                <a href="../task?id=<?=$row['idboards']?>">
+                  <button class="px-2 py-1 mt-2" style="background: #FF7F3F; border-radius: 8px; border: 0; color: #FFF; font-weight: 600;">See Task</button>
+                </a>
+                <button data-toggle="modal" data-target="#detailClient<?=$row['idboards']?>" class="px-2 py-1" style="background: #FF7F3F; border-radius: 8px; border: 0; color: #FFF; font-weight: 600;">Detail Owner</button>
+              </div>
+
+              <!-- Modal -->
+              <div class="modal fade" id="detailClient<?=$row['idboards']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Detail Owner Product "<?=$row['title']?>"</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="d-flex justify-content-between">
+                        <p>Owner</p>
+                        <p><?=$row['owner_name']?></p>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <p>Company</p>
+                        <p><?=$row['company_name']?></p>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <p>Address</p>
+                        <p><?=$row['address']?></p>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <p>No. Telp</p>
+                        <p><?=$row['no_telp']?></p>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <p>Email</p>
+                        <p><?=$row['email']?></p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="center-side-card d-flex">
+              <div class="component" style="text-align: left;">
+                  <h2>Description</h2>
+                  <span style="color: #548CFF;"><?=$row['description']?></span>
+              </div>
+            </div>
+            <div class="d-flex right-side-card">
+              <div class="component ml-4" style="text-align: left;">
+                <h2>Startdate</h2>
+                <span style="color: #E3C629;"><?=$row['start_date']?></span>
+              </div>
+              <div class="component ml-4" style="text-align: left;">
+                <h2>Deadline</h2>
+                <span style="color: #F33838;"><?=$row['deadline']?></span>
+              </div>
             </div>
           </div>
-          <div class="center-side-card">
-            <div class="component" style="text-align: left;">
-                <h2>Description</h2>
-                <span style="color: #548CFF;"><?=$row['description']?></span>
+          <div class="d-flex align-items-center justify-content-between" style="width: 100%;">
+            <div class="left-side-card">
+              <h3 style='float: left; margin: 0; color: transparent;'><?=$row['status']?></h3>
             </div>
-          </div>
-          <div class="d-flex right-side-card">
-            <div class="component ml-4" style="text-align: left;">
-              <h2>Startdate</h2>
-              <span style="color: #E3C629;"><?=$row['startdate']?></span>
-            </div>
-            <div class="component ml-4" style="text-align: left;">
-              <h2>Deadline</h2>
-              <span style="color: #F33838;"><?=$row['deadline']?></span>
+            <div class="d-flex right-side-card">
+              <div class="component ml-4" style="text-align: left;">
+                <h2 style="color: transparent;">Pay Status</h2>
+                <span style="color: transparent;"><?=$row['pay_status']?></span>
+              </div>
+              <div class="component ml-4" style="text-align: left;">
+                <h2>Pay Status</h2>
+                <span style="color: #548CFF;"><?=$row['pay_status']?></span>
+              </div>
+              <div class="component ml-4" style="text-align: left;">
+                <h2>Price</h2>
+                <span style="color: #548CFF;">Rp. <?=$row['project_price']?></span>
+              </div>
             </div>
           </div>
         </div>

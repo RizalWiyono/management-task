@@ -50,7 +50,7 @@
         <h1 class="title-logo mb-4">TaskManager.</h1>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="../home">
               <span data-feather="home"></span>
               Home
             </a>
@@ -67,12 +67,12 @@
               Report Data
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="#">
               <span data-feather="file"></span>
               Note
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </nav>

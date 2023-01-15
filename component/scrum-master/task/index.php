@@ -73,12 +73,12 @@
               Send Report
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link d-flex align-items-center" href="../note/">
               <span class="mr-3" data-feather="file"></span>
               Note
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </nav>
@@ -86,6 +86,9 @@
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="height: 100vh;">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Task Boards</h1>
+        <a href="../taskValidation/?id=<?=$_GET['id']?>">
+          <button class="ml-4" style="background: #FF7F3F; border: 0; border-radius: 10px; z-index: 2;">Task Validation</button>
+        </a>
       </div>
       <?php
         $no = 1;
@@ -104,11 +107,15 @@
             </h1>
             <div class="d-flex align-items-center">
               <?php
-              if($row['point'] !== 0){
-                echo "<h3 style='float: left; margin: 0;'>".$row['point']."</h3><h2 style='float: left; margin: 0; margin-top: 12px; margin-left: 5px;'>Point</h2>";
-              }elseif($row['salary'] !== 'Medium'){
-                echo "<h3 style='float: left; margin: 0;'>".$row['salary']."</h3><h2 style='float: left; margin: 0; margin-top: 12px; margin-left: 5px;'>.00</h2>";
-              }else{}
+              $idTask = $row['idtask'];
+              $queryPoint  = mysqli_query($connect, "SELECT * FROM tb_value WHERE idtask=$idTask");
+              while($rowPoint = mysqli_fetch_array($queryPoint)){
+                if($rowPoint['type_value'] === 'Point'){
+                  echo "<h3 style='float: left; margin: 0;'>".$rowPoint['value']."</h3><h2 style='float: left; margin: 0; margin-top: 12px; margin-left: 5px;'>Point</h2>";
+                }elseif($rowPoint['type_value'] === 'Salary'){
+                  echo "<h3 style='float: left; margin: 0;'>Rp. ".$rowPoint['value']."</h3><h2 style='float: left; margin: 0; margin-top: 12px; margin-left: 5px;'>.00</h2>";
+                }else{}
+              }
               ?>
             </div>
           </div>
@@ -117,7 +124,7 @@
             <div class="component">
               <h2>Member</h2>
               <div class="d-flex align-items-center">
-                <button type="button" style="background-color: transparent; border: 0; outline: none;" data-toggle="modal" data-target="#modalAssigne">
+                <button type="button" style="background-color: transparent; border: 0; outline: none;" data-toggle="modal" data-target="#modalAssigne<?=$row['idtask']?>">
                   <svg data-toggle="modal" data-target="#doing<?=$rowDoing["idlistTask"]?>" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M6.99984 7.00033H4.6665M6.99984 4.66699V7.00033V4.66699ZM6.99984 7.00033V9.33366V7.00033ZM6.99984 7.00033H9.33317H6.99984Z" stroke="#CDCDCD" stroke-linecap="round"/>
                       <path d="M6.99984 12.8337C10.2215 12.8337 12.8332 10.222 12.8332 7.00033C12.8332 3.77866 10.2215 1.16699 6.99984 1.16699C3.77818 1.16699 1.1665 3.77866 1.1665 7.00033C1.1665 10.222 3.77818 12.8337 6.99984 12.8337Z" stroke="#CDCDCD"/>
@@ -142,7 +149,7 @@
           </div>
 
           <!-- Modal -->
-          <div class="modal fade" id="modalAssigne" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="modalAssigne<?=$row['idtask']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -168,7 +175,7 @@
                       </label>
                     <?php } ?>
 
-                    <input type="hidden" value="<?=$row['idtask']?>" name="idtask">
+                    <input type="hidden" value="<?=$idTask?>" name="idtask">
                     <input type="hidden" value="<?=$_GET['id']?>" name="idpage">
 
                     <button type="submit" class="btn btn-primary mt-4">Tambahkan</button>
@@ -200,15 +207,15 @@
               ?>
             </div>
             <?php
-            if($row['status'] === 'Publish'){
-              echo '<button class="ml-4" style="background: #FF7F3F; border: 0; border-radius: 10px; z-index: 2;">Progress</button>';
-            }elseif($row['status'] === 'Verification'){
-              echo '<form action="fetch/validationTask.php" method="post" style="z-index: 2;">
-                <input type="hidden" value="'.$idboards.'" name="paramId">
-                <input type="hidden" value="'.$row['idtask'].'" name="param">
-                <button type="submit" class="ml-4" style="background: #38F378; border: 0; border-radius: 10px; z-index: 2; height: 100%;">Done</button>
-              </form>';
-            }else{}
+            // if($row['status'] === 'Publish'){
+            //   echo '<button class="ml-4" style="background: #FF7F3F; border: 0; border-radius: 10px; z-index: 2;">Progress</button>';
+            // }elseif($row['status'] === 'Verification'){
+            //   echo '<form action="fetch/validationTask.php" method="post" style="z-index: 2;">
+            //     <input type="hidden" value="'.$idboards.'" name="paramId">
+            //     <input type="hidden" value="'.$row['idtask'].'" name="param">
+            //     <button type="submit" class="ml-4" style="background: #38F378; border: 0; border-radius: 10px; z-index: 2; height: 100%;">Done</button>
+            //   </form>';
+            // }else{}
             ?>
           </div>
         </div>

@@ -66,12 +66,12 @@
               Send Report
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link d-flex align-items-center" href="../note/">
               <span class="mr-3" data-feather="file"></span>
               Note
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </nav>
@@ -84,13 +84,14 @@
         <img src="../../../src/images/assets-1.png" alt="">
         <div class="card-send-report p-4" style="padding-right: 200px !important;">
           <h1>Fill in the email address to send an alert.</h1>
-          <form action="" method="post">
+          <form action="fetch/email-script.php" method="post">
             <div class="form-group">
               <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <?= error_reporting(0); ?>
+              <input readonly type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" value="<?=$_GET['email']?>">
               <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
-            <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn-linear-primary p-2" >Send</button>
+            <button type="submit" data-toggle="modal" data-target="#exampleModal" class="btn-linear-primary p-2" >Send</button>
           </form>
         </div>
       </div>
@@ -100,24 +101,34 @@
           <tr>
             <th scope="col">No.</th>
             <th scope="col">Name</th>
-            <th scope="col">Description</th>
             <th scope="col">Email</th>
             <th scope="col">Date</th>
             <th scope="col">Role</th>
+            <th scope="col">Type Value</th>
+            <th scope="col">Total Value</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
           <?php
           $no = 1;
-          $queryAccount  = mysqli_query($connect, "SELECT * FROM tb_report");
+          $queryAccount  = mysqli_query($connect, "SELECT SUM(total_value_earned) as total, tb_wallet.idaccount, idwallet, name, tb_wallet.date, email, type_value, role FROM `tb_wallet` INNER JOIN tb_account ON tb_wallet.idaccount = tb_account.idaccount GROUP BY YEAR(date), MONTH(date), tb_wallet.idaccount");
           while($row = mysqli_fetch_array($queryAccount)){?>
           <tr>
             <th scope="row"><?=$no?></th>
             <td><?=$row['name']?></td>
-            <td><?=$row['description']?></td>
             <td><?=$row['email']?></td>
             <td><?=$row['date']?></td>
             <td><?=$row['role']?></td>
+            <td><?=$row['type_value']?></td>
+            <td><?=$row['total']?></td>
+            <td>
+              <a href="?idaccount=<?=$row['idaccount']?>&&date=<?=$row['date']?>&&email=<?=$row['email']?>">
+                <button class="btn btn-primary">
+                  Send Report
+                </button>
+              </a>
+            </td>
           </tr>
           <?php $no++;
           } ?> 

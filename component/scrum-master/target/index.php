@@ -8,7 +8,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Admin || Input Employee</title>
+	<title>SM || Target</title>
 
 	<!-- Favicon -->
 	<link rel="icon" type="image/x-icon" href="../../../src/images/favicon.png">
@@ -58,7 +58,7 @@
           <li class="nav-item">
             <a class="nav-link active d-flex align-items-center" href="../target">
               <span class="mr-3" data-feather="users"></span>
-              Target Point
+              Target
             </a>
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center" href="../boards">
@@ -72,12 +72,12 @@
               Send Report
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link d-flex align-items-center" href="../note/">
               <span class="mr-3" data-feather="file"></span>
               Note
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </nav>

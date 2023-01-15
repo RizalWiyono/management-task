@@ -2,6 +2,6 @@
 $host = 'localhost'; // Nama hostnya
 $username = 'root'; // Username
 $password = ''; // Password (Isi jika menggunakan password)
-$database = 'db_sistem_manajemenproyek'; // Nama databasenya
+$database = 'db_task'; // Nama databasenya
 // Koneksi ke MySQL dengan PDO
 $pdo = new PDO('mysql:host='.$host.';dbname='.$database, $username, $password);

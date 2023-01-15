@@ -2,6 +2,9 @@
 
 include '../../../../src/connection/connection.php';
 
+session_start();
+$idOrganization = $_SESSION['idorganization'];
+
 $title = $_POST["title"];
 $desc = $_POST["desc"];
 $startdate = $_POST["startdate"];
@@ -32,9 +35,9 @@ values
 ($id, '$owner', '$address', '$no_telp', '$email', '$company')");
 
 mysqli_query($connect, "INSERT INTO tb_boards 
-( idboards, idclient, title,  description, plan_date, start_date, deadline, pay_status, status, project_price, end_date) 
+( idboards, idclient, idorganization, title,  description, plan_date, start_date, deadline, pay_status, status, project_price, end_date) 
 values 
-(null, $id, '$title', '$desc', '$plan_date', '$startdate', '$deadline', '$pay_status', 'On Progress', $price, '$end_date')");
+(null, $id, $idOrganization, '$title', '$desc', '$plan_date', '$startdate', '$deadline', '$pay_status', 'On Progress', $price, '$end_date')");
 
 
 header("location: ../?process=success");

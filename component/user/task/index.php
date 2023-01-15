@@ -76,7 +76,7 @@
       </div>
       <?php
         $no = 1;
-        $queryTask  = mysqli_query($connect, "SELECT * FROM tb_task WHERE idboards=$idboards");
+        $queryTask  = mysqli_query($connect, "SELECT * FROM tb_task INNER JOIN tb_priority_master ON tb_task.idpriority = tb_priority_master.idpriority WHERE idboards=$idboards");
         while($row = mysqli_fetch_array($queryTask)){?>
         <div class="card-task p-4 mb-3">
           <div class="component-left-decoration">
@@ -91,22 +91,48 @@
             </h1>
             <div class="d-flex align-items-center">
               <?php
-              if($row['point'] !== 0){
-                echo "<h3 style='float: left; margin: 0;'>".$row['point']."</h3><h2 style='float: left; margin: 0; margin-top: 12px; margin-left: 5px;'>Point</h2>";
-              }elseif($row['salary'] !== 'Medium'){
-                echo "<h3 style='float: left; margin: 0;'>".$row['salary']."</h3><h2 style='float: left; margin: 0; margin-top: 12px; margin-left: 5px;'>.00</h2>";
-              }else{}
+              $idTask = $row['idtask'];
+              $queryPoint  = mysqli_query($connect, "SELECT * FROM tb_value WHERE idtask=$idTask");
+              while($rowPoint = mysqli_fetch_array($queryPoint)){
+                if($rowPoint['type_value'] === 'Point'){
+                  echo "<h3 style='float: left; margin: 0;'>".$rowPoint['value']."</h3><h2 style='float: left; margin: 0; margin-top: 12px; margin-left: 5px;'>Point</h2>";
+                }elseif($rowPoint['type_value'] === 'Salary'){
+                  echo "<h3 style='float: left; margin: 0;'>Rp. ".$rowPoint['value']."</h3><h2 style='float: left; margin: 0; margin-top: 12px; margin-left: 5px;'>.00</h2>";
+                }else{}
+              }
               ?>
             </div>
           </div>
           <div class="d-flex right-side-car align-items-center">
             <div class="component">
               <h2>Startdate</h2>
-              <span style="color: #548CFF;"><?=$row['startdate']?></span>
+              <span style="color: #548CFF;"><?=$row['start_date']?></span>
             </div>
             <div class="ml-4 component">
               <h2>Deadline</h2>
-              <span style="color: #F33838 !important;"><?=$row['deadline']?></span>
+              <?php
+              $date = date("Y-m-d");
+              if($row['deadline'] > $date){
+                ?> <span style="color: #F33838 !important;"><?=$row['end_date']?></span> <?php
+              }else if($row['end_date'] > $date){
+                ?> <span style="color: #F33838 !important;"></span> <?php
+              }else{ 
+                ?> <span style="color: #F33838 !important;"><?=$row['deadline']?></span> <?php
+              }
+              ?>
+            </div>
+            <div class="ml-4 component">
+              <h2>Note</h2>
+              <?php
+              $date = date("Y-m-d");
+              if($row['deadline'] > $date){
+                ?> <span style="color: #F33838 !important;">Late!</span> <?php
+              }else if($row['end_date'] > $date){
+                ?> <span style="color: #38F378 !important;">Not Active! Confirmation to your PM for give new deadline.</span> <?php
+              }else{ 
+                ?> <span style="color: #38F378 !important;">Active</span> <?php
+              }
+              ?>
             </div>
             <div class="ml-4 component">
               <h2>Priority</h2>
@@ -129,18 +155,21 @@
               $flowStatus = $rowFlowStatus['status'];
             }
 
-            if($row['status'] === 'Publish'){
-              if($flowStatus === 'Done'){
-                echo '<form action="fetch/validationTask.php" method="post" style="z-index: 2;">
-                  <input type="hidden" value="'.$idboards.'" name="paramId">
-                  <input type="hidden" value="'.$row['idtask'].'" name="param">
-                  <button type="submit" class="ml-4" style="background: #FF7F3F; border: 0; border-radius: 10px; z-index: 2; height: 100%;">></button>
-                </form>';
+            $date = date("Y-m-d");
+            if($date < $row['end_date'] ){
+              if($row['status'] === 'Publish'){
+                if($flowStatus === 'Done'){
+                  echo '<form action="fetch/validationTask.php" method="post" style="z-index: 2;">
+                    <input type="hidden" value="'.$idboards.'" name="paramId">
+                    <input type="hidden" value="'.$row['idtask'].'" name="param">
+                    <button type="submit" class="ml-4" style="background: #FF7F3F; border: 0; border-radius: 10px; z-index: 2; height: 100%;">></button>
+                  </form>';
+                }
+              }elseif($row['status'] === 'Verification'){
+                echo '<button class="ml-4" style="background: #E3C629; border: 0; border-radius: 10px; z-index: 2; height: 100%;">Validation</button>';
+              }elseif($row['status'] === 'Done'){
+                echo '<button class="ml-4" style="background: #38F378; border: 0; border-radius: 10px; z-index: 2; height: 100%;">Done</button>';
               }
-            }elseif($row['status'] === 'Verification'){
-              echo '<button class="ml-4" style="background: #E3C629; border: 0; border-radius: 10px; z-index: 2; height: 100%;">Validation</button>';
-            }elseif($row['status'] === 'Done'){
-              echo '<button class="ml-4" style="background: #38F378; border: 0; border-radius: 10px; z-index: 2; height: 100%;">Done</button>';
             }
             ?>
           </div>

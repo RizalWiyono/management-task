@@ -70,12 +70,12 @@
               Send Report
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link d-flex align-items-center" href="../note/">
               <span class="mr-3" data-feather="file"></span>
               Note
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </nav>
@@ -106,17 +106,52 @@
                 <a href="../task?id=<?=$row['idboards']?>">
                   <button class="px-2 py-1 mt-2" style="background: #FF7F3F; border-radius: 8px; border: 0; color: #FFF; font-weight: 600;">See Task</button>
                 </a>
+                  <button data-toggle="modal" data-target="#detailClient<?=$row['idboards']?>" class="px-2 py-1" style="background: #FF7F3F; border-radius: 8px; border: 0; color: #FFF; font-weight: 600;">Detail Owner</button>
+              </div>
+
+              <!-- Modal -->
+              <div class="modal fade" id="detailClient<?=$row['idboards']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Detail Owner Product "<?=$row['title']?>"</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="d-flex justify-content-between">
+                        <p>Owner</p>
+                        <p><?=$row['owner_name']?></p>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <p>Company</p>
+                        <p><?=$row['company_name']?></p>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <p>Address</p>
+                        <p><?=$row['address']?></p>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <p>No. Telp</p>
+                        <p><?=$row['no_telp']?></p>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <p>Email</p>
+                        <p><?=$row['email']?></p>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="center-side-card d-flex">
               <div class="component" style="text-align: left;">
                   <h2>Description</h2>
                   <span style="color: #548CFF;"><?=$row['description']?></span>
-              </div>
-              
-              <div class="component ml-2" style="text-align: left;">
-                  <h2>Owner</h2>
-                  <span style="color: #548CFF;"><?=$row['owner_name']?></span>
               </div>
             </div>
             <div class="d-flex right-side-card">
@@ -133,20 +168,6 @@
           <div class="d-flex align-items-center justify-content-between" style="width: 100%;">
             <div class="left-side-card">
               <h3 style='float: left; margin: 0; color: transparent;'><?=$row['status']?></h3>
-            </div>
-            <div class="center-side-card d-flex">
-              <div class="component" style="text-align: left;">
-                  <h2>Address</h2>
-                  <span style="color: #548CFF;"><?=$row['address']?></span>
-              </div>
-              <div class="component ml-2" style="text-align: left;">
-                  <h2>No. Telp</h2>
-                  <span style="color: #548CFF;"><?=$row['no_telp']?></span>
-              </div>
-              <div class="component ml-2" style="text-align: left;">
-                  <h2>Email</h2>
-                  <span style="color: #548CFF;"><?=$row['email']?></span>
-              </div>
             </div>
             <div class="d-flex right-side-card">
               <div class="component ml-4" style="text-align: left;">
