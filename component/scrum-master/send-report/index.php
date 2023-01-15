@@ -55,6 +55,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link d-flex align-items-center" href="../target">
+              <span class="mr-3" data-feather="users"></span>
+              Target Point
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link d-flex align-items-center" href="../boards/">
               <span class="mr-3" data-feather="bar-chart-2"></span>
               Boards
@@ -64,6 +70,11 @@
             <a class="nav-link active d-flex align-items-center" href="#">
               <span class="mr-3" data-feather="send"></span>
               Send Report
+            </a>
+          </li>
+          <li class="nav-item" style="position: absolute; bottom: 15px;">
+            <a class="nav-link d-flex align-items-center" href="../../auth/logout.php">
+              Logout
             </a>
           </li>
           <!-- <li class="nav-item">
@@ -89,6 +100,9 @@
               <label for="exampleInputEmail1">Email address</label>
               <?= error_reporting(0); ?>
               <input readonly type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" value="<?=$_GET['email']?>">
+              <input type="hidden" name="idaccount" value="<?=$_GET['idaccount']?>">
+              <input type="hidden" name="date" value="<?=$_GET['date']?>">
+              <input type="hidden" name="value" value="<?=$_GET['value']?>">
               <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
             <button type="submit" data-toggle="modal" data-target="#exampleModal" class="btn-linear-primary p-2" >Send</button>
@@ -123,7 +137,7 @@
             <td><?=$row['type_value']?></td>
             <td><?=$row['total']?></td>
             <td>
-              <a href="?idaccount=<?=$row['idaccount']?>&&date=<?=$row['date']?>&&email=<?=$row['email']?>">
+              <a href="?idaccount=<?=$row['idaccount']?>&&date=<?=$row['date']?>&&email=<?=$row['email']?>&&value=<?=$row['total']?>">
                 <button class="btn btn-primary">
                   Send Report
                 </button>

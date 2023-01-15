@@ -66,6 +66,11 @@
               Report Data
             </a>
           </li>
+          <li class="nav-item" style="position: absolute; bottom: 15px;">
+            <a class="nav-link d-flex align-items-center" href="../../auth/logout.php">
+              Logout
+            </a>
+          </li>
           <!-- <li class="nav-item">
             <a class="nav-link active" href="#">
               <span data-feather="file"></span>

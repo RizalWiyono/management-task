@@ -60,10 +60,15 @@
               Boards
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link d-flex align-items-center" href="../note/">
               <span class="mr-3" data-feather="file"></span>
               Note
+            </a>
+          </li> -->
+          <li class="nav-item" style="position: absolute; bottom: 15px;">
+            <a class="nav-link d-flex align-items-center" href="../../auth/logout.php">
+              Logout
             </a>
           </li>
         </ul>
@@ -109,12 +114,16 @@
               <span style="color: #548CFF;"><?=$row['start_date']?></span>
             </div>
             <div class="ml-4 component">
-              <h2>Deadline</h2>
               <?php
+              error_reporting(0);
               $date = date("Y-m-d");
-              if($row['deadline'] > $date){
+              if($date < $row['end_date']){ ?>
+              <h2>Deadline</h2>
+              <?php }
+              $date = date("Y-m-d");
+              if($date > $row['deadline'] && $date < $row['end_date']){
                 ?> <span style="color: #F33838 !important;"><?=$row['end_date']?></span> <?php
-              }else if($row['end_date'] > $date){
+              }else if($date > $row['end_date'] && $date > $row['deadline']){
                 ?> <span style="color: #F33838 !important;"></span> <?php
               }else{ 
                 ?> <span style="color: #F33838 !important;"><?=$row['deadline']?></span> <?php
@@ -125,9 +134,9 @@
               <h2>Note</h2>
               <?php
               $date = date("Y-m-d");
-              if($row['deadline'] > $date){
+              if($date > $row['deadline'] && $date < $row['end_date']){
                 ?> <span style="color: #F33838 !important;">Late!</span> <?php
-              }else if($row['end_date'] > $date){
+              }else if($date > $row['end_date'] && $date > $row['deadline']){
                 ?> <span style="color: #38F378 !important;">Not Active! Confirmation to your PM for give new deadline.</span> <?php
               }else{ 
                 ?> <span style="color: #38F378 !important;">Active</span> <?php
@@ -156,7 +165,7 @@
             }
 
             $date = date("Y-m-d");
-            if($date < $row['end_date'] ){
+            if($date <= $row['end_date'] ){
               if($row['status'] === 'Publish'){
                 if($flowStatus === 'Done'){
                   echo '<form action="fetch/validationTask.php" method="post" style="z-index: 2;">
