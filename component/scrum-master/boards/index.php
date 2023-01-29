@@ -1,5 +1,10 @@
 <?php
     include '../../../src/connection/connection.php';
+    function rupiah($angka){
+	
+      $hasil_rupiah = "Rp " . number_format($angka,2,',','.');
+      return $hasil_rupiah;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -107,13 +112,20 @@
               <h1>
               <?=$row['title']?>
               </h1>
-              <h3 style='float: left; margin: 0; color: #FFF069;'><?=$row['status']?></h3>
+              <h3 style='margin: 0; color: #FFF069;'><?=$row['status']?></h3>
               <div>
                 <a href="../task?id=<?=$row['idboards']?>">
                   <button class="px-2 py-1 mt-2" style="background: #FF7F3F; border-radius: 8px; border: 0; color: #FFF; font-weight: 600;">See Task</button>
                 </a>
                   <button data-toggle="modal" data-target="#detailClient<?=$row['idboards']?>" class="px-2 py-1" style="background: #FF7F3F; border-radius: 8px; border: 0; color: #FFF; font-weight: 600;">Detail Owner</button>
+                <a href="../gantt-chart?id=<?=$row['idboards']?>">
+                  <button class="px-2 py-1 btn-info" type="submit" style="border-radius: 8px; border: 0; color: #FFF; font-weight: 600;">Gantt Chart</button>
+                </a>
               </div>
+              <form action="fetch/statusBoards.php" method="post">
+                <input type="hidden" name="id" value="<?=$row['idboards']?>">
+                <button class="px-2 py-1 btn-success" type="submit" style="position: absolute; bottom: 15%; border-radius: 8px; border: 0; color: #FFF; font-weight: 600;">Done</button>
+              </form>
 
               <!-- Modal -->
               <div class="modal fade" id="detailClient<?=$row['idboards']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -186,7 +198,7 @@
               </div>
               <div class="component ml-4" style="text-align: left;">
                 <h2>Price</h2>
-                <span style="color: #548CFF;">Rp. <?=$row['project_price']?></span>
+                <span style="color: #548CFF;"><?=rupiah($row['project_price'])?></span>
               </div>
             </div>
           </div>

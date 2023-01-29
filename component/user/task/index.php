@@ -160,9 +160,29 @@
             $flowCode = $row['flow']-1;
             $flowStatus = 'Done';
             $queryFlowStatus  = mysqli_query($connect, "SELECT * FROM tb_task WHERE flow=$flowCode AND idboards=$idboards");
+            $no = 0;
             while($rowFlowStatus = mysqli_fetch_array($queryFlowStatus)){
               $flowStatus = $rowFlowStatus['status'];
+              $titleTask = $rowFlowStatus['title'];
+              $no++;
             }
+            ?> 
+
+              <?php if(isset($titleTask)) {?>
+                <div class="ml-4 component">
+                  <h2>Status Previous Tasks</h2>
+                    <span style='color: #E3C629;'><?=$titleTask?></span>
+                    <?php if($flowStatus === 'Done') { ?>
+                      <span >: Done</span>
+                    <?php }elseif($flowStatus === 'Date Extention') {?>
+                      <span >: Date Extention</span>
+                    <?php }else{ ?>
+                      <span style='color: #F33838;'>: Not finished yet</span>
+                    <?php } ?>
+                </div>
+              <?php } ?>
+
+            <?php
 
             $date = date("Y-m-d");
             if($date <= $row['end_date'] ){
@@ -178,6 +198,16 @@
                 echo '<button class="ml-4" style="background: #E3C629; border: 0; border-radius: 10px; z-index: 2; height: 100%;">Validation</button>';
               }elseif($row['status'] === 'Done'){
                 echo '<button class="ml-4" style="background: #38F378; border: 0; border-radius: 10px; z-index: 2; height: 100%;">Done</button>';
+              }
+            }elseif($date > $row['deadline'] && $row['end_date'] === '0000-00-00'){
+              if($row['status'] === 'Date Extention') {
+                echo '<button class="ml-4 btn-info" style=" border: 0; border-radius: 10px; z-index: 2; height: 100%;">Pending</button>';
+              }else{
+                echo '<form action="fetch/statusTask.php" method="post" style="z-index: 2;">
+                  <input type="hidden" value="'.$idboards.'" name="paramId">
+                  <input type="hidden" value="'.$row['idtask'].'" name="param">
+                  <button type="submit" class="ml-4 btn-warning" style=" border: 0; border-radius: 10px; z-index: 2; height: 100%;">Date Extention</button>
+                </form>';
               }
             }
             ?>

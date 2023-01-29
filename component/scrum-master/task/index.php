@@ -167,9 +167,10 @@
                     <?php
                     $no = 1;
                     $queryEmployee  = mysqli_query($connect, "SELECT * FROM tb_account WHERE idorganization=$idOrganization AND role!='Admin'");
+                    $no = 0;
                     while($rowEmployee = mysqli_fetch_array($queryEmployee)){?>
                       <label for="contribution<?=$rowEmployee['idaccount']?>" class="d-flex align-items-center">
-                        <input type="radio" id="contribution<?=$rowEmployee['idaccount']?>" value="<?=$rowEmployee['idaccount']?>" name="idaccount" class="mr-2">
+                        <input type="checkbox" id="contribution<?=$rowEmployee['idaccount']?>" value="<?=$rowEmployee['idaccount']?>" name="idaccount[<?=$no?>]" class="mr-2">
                         <img data-toggle="tooltip" data-placement="top" data-html="true" title="<em><?=$rowEmployee['name']?></em>"
                         style="
                         width: 25px;
@@ -178,7 +179,7 @@
                         border-radius: 100px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/No_image_%28male%29.svg/450px-No_image_%28male%29.svg.png" alt="" srcset="">
                         <span class="ml-2"><?=$rowEmployee['name']?></span>
                       </label>
-                    <?php } ?>
+                    <?php $no++; } ?>
 
                     <input type="hidden" value="<?=$idTask?>" name="idtask">
                     <input type="hidden" value="<?=$_GET['id']?>" name="idpage">
@@ -211,17 +212,51 @@
               }
               ?>
             </div>
-            <?php
-            // if($row['status'] === 'Publish'){
-            //   echo '<button class="ml-4" style="background: #FF7F3F; border: 0; border-radius: 10px; z-index: 2;">Progress</button>';
-            // }elseif($row['status'] === 'Verification'){
-            //   echo '<form action="fetch/validationTask.php" method="post" style="z-index: 2;">
-            //     <input type="hidden" value="'.$idboards.'" name="paramId">
-            //     <input type="hidden" value="'.$row['idtask'].'" name="param">
-            //     <button type="submit" class="ml-4" style="background: #38F378; border: 0; border-radius: 10px; z-index: 2; height: 100%;">Done</button>
-            //   </form>';
-            // }else{}
-            ?>
+            <?php if($row['status'] === 'Date Extention'){
+              echo '<button class="ml-4 btn-warning" data-toggle="modal" data-target="#updateDate'.$row['idtask'].'" style="border: 0; border-radius: 10px; z-index: 2;">Update Date</button>';
+            } ?>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="updateDate<?=$row['idtask']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Date</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="fetch/updateDate.php" method="POST">
+                <input type="hidden" name="idboards" class="form-control" value="<?=$idboards?>">
+                <input type="hidden" name="id" class="form-control" value="<?=$row['idtask']?>">
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Plan Date</label>
+                            <input type="date" name="plan_date" class="form-control" id="exampleFormControlInput1" placeholder="Title task here...">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">End Date</label>
+                            <input type="date" name="end_date" class="form-control" id="exampleFormControlInput1" placeholder="Title task here...">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       <?php $no++;
@@ -269,7 +304,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md-12">
                 <div class="row">
                   <div class="col-md-6">
@@ -286,7 +321,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="form-group">
               <label for="exampleInputEmail1">Priority</label>
               <div class="d-flex">

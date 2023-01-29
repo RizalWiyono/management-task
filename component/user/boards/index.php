@@ -1,5 +1,10 @@
 <?php
     include '../../../src/connection/connection.php';
+    function rupiah($angka){
+	
+      $hasil_rupiah = "Rp " . number_format($angka,2,',','.');
+      return $hasil_rupiah;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,7 +100,7 @@
               <h1>
               <?=$row['title']?>
               </h1>
-              <h3 style='float: left; margin: 0; color: #FFF069;'><?=$row['status']?></h3>
+              <h3 style='margin: 0; color: #FFF069;'><?=$row['status']?></h3>
               <div>
                 <a href="../task?id=<?=$row['idboards']?>">
                   <button class="px-2 py-1 mt-2" style="background: #FF7F3F; border-radius: 8px; border: 0; color: #FFF; font-weight: 600;">See Task</button>
@@ -174,7 +179,7 @@
               </div>
               <div class="component ml-4" style="text-align: left;">
                 <h2>Price</h2>
-                <span style="color: #548CFF;">Rp. <?=$row['project_price']?></span>
+                <span style="color: #548CFF;"><?=rupiah($row['project_price'])?></span>
               </div>
             </div>
           </div>

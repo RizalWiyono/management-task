@@ -1,13 +1,13 @@
 <?php
-error_reporting(0);
+// error_reporting(0);
 include '../../../../src/connection/connection.php';
 
 $title = $_POST["title"];
 $desc = $_POST["desc"];
 $startdate = $_POST["startdate"];
 $deadline = $_POST["deadline"];
-$plan_date = $_POST["plan_date"];
-$end_date = $_POST["end_date"];
+// $plan_date = $_POST["plan_date"];
+// $end_date = $_POST["end_date"];
 $idboards = $_POST["idboards"];
 $type_priority = $_POST["type_priority"];
 $type_value = $_POST["type_value"];
@@ -47,7 +47,7 @@ if($flowTask) {
 mysqli_query($connect, "INSERT INTO tb_task 
 ( idtask, idboards, idpriority, title, plan_date, start_date, description, deadline, status, link_file, end_date, flow, task_done_flow) 
 values 
-(null, $idboards, '$type_priority', '$title', '$plan_date', '$startdate', '$desc', '$deadline', 'Publish', '-', '$end_date', $maxFlow, '$flowTask')");
+(null, $idboards, '$type_priority', '$title', '0000-00-00', '$startdate', '$desc', '$deadline', 'Publish', '-', '0000-00-00', $maxFlow, '$flowTask')");
 
 $queryIdTask  = mysqli_query($connect, "SELECT idtask FROM tb_task WHERE idboards=$idboards AND title='$title' AND start_date='$startdate'");
 while($row = mysqli_fetch_array($queryIdTask)){

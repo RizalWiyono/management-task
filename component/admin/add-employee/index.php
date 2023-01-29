@@ -62,7 +62,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="../report-data">
               <span data-feather="bar-chart-2"></span>
               Report Data
             </a>
@@ -73,6 +73,11 @@
               Note
             </a>
           </li> -->
+          <li class="nav-item" style="position: absolute; bottom: 15px;">
+            <a class="nav-link d-flex align-items-center" href="../../auth/logout.php">
+              Logout
+            </a>
+          </li>
         </ul>
       </div>
     </nav>

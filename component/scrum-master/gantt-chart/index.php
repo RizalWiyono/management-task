@@ -49,8 +49,8 @@
       <div class="sidebar-sticky">
         <h1 class="title-logo mb-4">TaskManager.</h1>
         <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link active d-flex align-items-center" href="#">
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center" href="../home/">
               <span class="mr-3" data-feather="home"></span>
               Home
             </a>
@@ -58,11 +58,10 @@
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center" href="../target">
               <span class="mr-3" data-feather="users"></span>
-              Target Point
+              Target
             </a>
-          </li>
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center" href="../boards/">
+            <a class="nav-link active d-flex align-items-center" href="../boards">
               <span class="mr-3" data-feather="bar-chart-2"></span>
               Boards
             </a>
@@ -90,7 +89,7 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="height: 100vh;">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Home</h1>
+        <h1 class="h2">Gantt Chart</h1>
       </div>
       <div>
         <div id="chart_div"></div>
@@ -124,6 +123,7 @@
     const fetchDataDynamic = $.ajax({
         type:"POST",
         url: "fetch/fetchdata.php",
+        data: { id: queryString.substr(4) },
         dataType: 'json',
         success: function(res){
             
@@ -139,8 +139,6 @@
         data.addColumn('number', 'Percent Complete');
         data.addColumn('string', 'Dependencies');
         var d = new Date();
-
-        console.log(res)
 
         for (let i = 0; i < res.length; i++) {
               dataDynamic.push([res[i].title, res[i].title, res[i].title,
