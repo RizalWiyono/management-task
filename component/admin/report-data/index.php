@@ -118,8 +118,10 @@
             <th scope="col">No.</th>
             <th scope="col">Title</th>
             <th scope="col">Description</th>
+            <th scope="col">Plan Date</th>
             <th scope="col">Start Date</th>
             <th scope="col">Deadline</th>
+            <th scope="col">End Date</th>
             <th scope="col">Pay Status</th>
             <th scope="col">Price</th>
             <th scope="col">Status Project</th>
@@ -134,10 +136,12 @@
             <th scope="row"><?=$no?></th>
             <td><?=$row['title']?></td>
             <td><?=$row['description']?></td>
+            <td><?=$row['plan_date']?></td>
             <td><?=$row['start_date']?></td>
             <td><?=$row['deadline']?></td>
+            <td><?=$row['end_date']?></td>
             <td><?=$row['pay_status']?></td>
-            <td><?=$row['project_price']?></td>
+            <td>Rp. <?=$row['project_price']?></td>
             <td><?=$row['status']?></td>
           </tr>
           <?php $no++;

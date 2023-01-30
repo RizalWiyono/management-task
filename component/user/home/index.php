@@ -87,7 +87,7 @@
         <h1 class="h2">Home</h1>
       </div>
       <div>
-        <canvas id="myChart"></canvas>
+        <div id="chart_div"></div>
       </div>
     </main>
   </div>
@@ -103,54 +103,64 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-<script>
-  const radioButtons = document.querySelectorAll('input[name="type_value"]');
-  if(document.getElementById('inlineRadio5').checked) {
-    document.getElementById('inp_point').style.display = 'none'
-  }else if(document.getElementById('inlineRadio6').checked) {
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['gantt']});
+    google.charts.setOnLoadCallback(drawChart);
 
-  }
+    function drawChart() {
 
-  function handleChange(val) {
-    if(val.value === 'Point'){
-      document.getElementById('inp_point').style.display = 'block'
-      document.getElementById('inp_salary').style.display = 'none'
-    }else if(val.value === 'Salary'){
-      document.getElementById('inp_point').style.display = 'none'
-      document.getElementById('inp_salary').style.display = 'block'
-    }else{
-      document.getElementById('inp_point').style.display = 'none'
-      document.getElementById('inp_salary').style.display = 'none'
+    
+
+    const queryString = window.location.search;
+
+    const fetchDataDynamic = $.ajax({
+        type:"POST",
+        url: "fetch/fetchdata.php",
+        dataType: 'json',
+        success: function(res){
+            
+        const dataDynamic = []
+        var data = new google.visualization.DataTable();
+
+        data.addColumn('string', 'Task ID');
+        data.addColumn('string', 'Task Name');
+        data.addColumn('string', 'Resource');
+        data.addColumn('date', 'Start Date');
+        data.addColumn('date', 'End Date');
+        data.addColumn('number', 'Duration');
+        data.addColumn('number', 'Percent Complete');
+        data.addColumn('string', 'Dependencies');
+        var d = new Date();
+
+        console.log(res)
+
+        for (let i = 0; i < res.length; i++) {
+              dataDynamic.push([res[i].title, res[i].title, res[i].title,
+            new Date(res[i].start_date.substr(0, 4), res[i].start_date.substr(5, 2), res[i].start_date.substr(8, 4)), new Date(res[i].deadline.substr(0, 4), res[i].deadline.substr(5, 2), res[i].deadline.substr(8, 4)), null, 0, null])
+        } 
+
+        console.log(dataDynamic)
+        
+        data.addRows(dataDynamic);
+
+
+        var options = {
+            height: 400,
+            gantt: {
+            trackHeight: 30
+            }
+        };
+
+        var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+        }
+    })
+
+    
+
+   
     }
-  }
-
-  const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-  ];
-
-  const data = {
-    labels: labels,
-    datasets: [{
-      label: 'My First dataset',
-      backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgb(255, 99, 132)',
-      data: [0, 10, 5, 2, 20, 30, 45],
-    }]
-  };
-
-  const config = {
-    type: 'line',
-    data: data,
-    options: {}
-  };
-
-  const myChart = new Chart(
-    document.getElementById('myChart'),
-    config
-  );
 </script>

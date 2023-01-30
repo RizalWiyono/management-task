@@ -85,7 +85,7 @@
       </div>
       <?php
         $no = 1;
-        $queryTask  = mysqli_query($connect, "SELECT * FROM tb_boards INNER JOIN tb_client ON tb_boards.idclient = tb_client.idclient");
+        $queryTask  = mysqli_query($connect, "SELECT * FROM tb_boards INNER JOIN tb_client ON tb_boards.idclient = tb_client.idclient WHERE tb_boards.status!='Draft'");
         while($row = mysqli_fetch_array($queryTask)){?>
         <div class="card-task d-block p-4 mb-3">
           <div class="component-left-decoration" style="background: #ED3C3C;">

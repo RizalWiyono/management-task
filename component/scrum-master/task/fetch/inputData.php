@@ -47,12 +47,18 @@ if($flowTask) {
 mysqli_query($connect, "INSERT INTO tb_task 
 ( idtask, idboards, idpriority, title, plan_date, start_date, description, deadline, status, link_file, end_date, flow, task_done_flow) 
 values 
-(null, $idboards, '$type_priority', '$title', '0000-00-00', '$startdate', '$desc', '$deadline', 'Publish', '-', '0000-00-00', $maxFlow, '$flowTask')");
+(null, $idboards, '$type_priority', '$title', '$startdate', '0000-00-00', '$desc', '$deadline', 'Publish', '-', '0000-00-00', $maxFlow, '$flowTask')");
 
-$queryIdTask  = mysqli_query($connect, "SELECT idtask FROM tb_task WHERE idboards=$idboards AND title='$title' AND start_date='$startdate'");
+$queryIdTask  = mysqli_query($connect, "SELECT idtask FROM tb_task WHERE idboards=$idboards AND title='$title' AND plan_date='$startdate'");
 while($row = mysqli_fetch_array($queryIdTask)){
     $idTask = $row['idtask'];
 }
+
+echo $title;
+// echo $type_priority;
+// echo $type_value;
+// echo $value_task;
+// echo $date;
 
 mysqli_query($connect, "INSERT INTO tb_value 
 (idvalue, idtask, idpriority, type_value, value, date) 

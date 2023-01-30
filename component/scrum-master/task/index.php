@@ -291,8 +291,8 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Startdate</label>
-                      <input type="date" name="startdate" class="form-control" id="exampleFormControlInput1" placeholder="Title task here...">
+                      <label for="exampleInputEmail1">Plan Date</label>
+                      <input type="date" name="startdate" class="form-control" id="exampleFormControlInput1" value="<?=date("Y-m-d")?>" readonly placeholder="Title task here...">
                     </div>
                   </div>
                   <div class="col-md-6">

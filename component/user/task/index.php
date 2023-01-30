@@ -184,6 +184,24 @@
 
             <?php
 
+            if($row['start_date'] === '0000-00-00'){
+              if(isset($titleTask)){
+                if($flowStatus === 'Done') { ?>
+                  <form action="fetch/addStart.php" method="post">
+                    <input type="hidden" value="<?=$idboards?>" name="paramId">
+                    <input type="hidden" value="<?=$row['idtask']?>" name="param">
+                    <button type="submit" class="ml-4 btn-warning" style=" border: 0; border-radius: 10px; z-index: 2; height: 100%;">Start</button>
+                  </form>
+                <?php }
+              }else{ ?>
+                <form action="fetch/addStart.php" method="post">
+                  <input type="hidden" value="<?=$idboards?>" name="paramId">
+                  <input type="hidden" value="<?=$row['idtask']?>" name="param">
+                  <button type="submit" class="ml-4 btn-warning px-3" style=" border: 0; border-radius: 10px; z-index: 2; height: 100%;">Start</button>
+                </form>
+              <?php }
+            }
+
             $date = date("Y-m-d");
             if($date <= $row['end_date'] ){
               if($row['status'] === 'Publish'){
@@ -202,12 +220,32 @@
             }elseif($date > $row['deadline'] && $row['end_date'] === '0000-00-00'){
               if($row['status'] === 'Date Extention') {
                 echo '<button class="ml-4 btn-info" style=" border: 0; border-radius: 10px; z-index: 2; height: 100%;">Pending</button>';
+              }elseif($flowStatus === 'Done'){
+                echo '<form action="fetch/validationTask.php" method="post" style="z-index: 2;">
+                  <input type="hidden" value="'.$idboards.'" name="paramId">
+                  <input type="hidden" value="'.$row['idtask'].'" name="param">
+                  <button type="submit" class="ml-4" style="background: #FF7F3F; border: 0; border-radius: 10px; z-index: 2; height: 100%;">></button>
+                </form>';
               }else{
                 echo '<form action="fetch/statusTask.php" method="post" style="z-index: 2;">
                   <input type="hidden" value="'.$idboards.'" name="paramId">
                   <input type="hidden" value="'.$row['idtask'].'" name="param">
                   <button type="submit" class="ml-4 btn-warning" style=" border: 0; border-radius: 10px; z-index: 2; height: 100%;">Date Extention</button>
                 </form>';
+              }
+            }elseif($date <= $row['deadline']  && $row['end_date'] === '0000-00-00'){
+              if($row['status'] === 'Publish'){
+                if($flowStatus === 'Done'){
+                  echo '<form action="fetch/validationTask.php" method="post" style="z-index: 2;">
+                    <input type="hidden" value="'.$idboards.'" name="paramId">
+                    <input type="hidden" value="'.$row['idtask'].'" name="param">
+                    <button type="submit" class="ml-4" style="background: #FF7F3F; border: 0; border-radius: 10px; z-index: 2; height: 100%;">></button>
+                  </form>';
+                }
+              }elseif($row['status'] === 'Verification'){
+                echo '<button class="ml-4" style="background: #E3C629; border: 0; border-radius: 10px; z-index: 2; height: 100%;">Validation</button>';
+              }elseif($row['status'] === 'Done'){
+                echo '<button class="ml-4" style="background: #38F378; border: 0; border-radius: 10px; z-index: 2; height: 100%;">Done</button>';
               }
             }
             ?>
