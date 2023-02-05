@@ -87,11 +87,13 @@
       </div>
     </nav>
 
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="min-height: 100vh;">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Gantt Chart</h1>
       </div>
-      <div>
+      <div style="padding: 10px;
+      background: white;
+      border-radius: 10px;">
         <div id="chart_div"></div>
       </div>
     </main>
@@ -151,11 +153,22 @@
 
 
         var options = {
-            height: 400,
-            gantt: {
+          gantt: {
             trackHeight: 30
-            }
+          }
         };
+        function resizeChart () {
+            chart.draw(data, options);
+        }
+        if (document.addEventListener) {
+            window.addEventListener('resize', resizeChart);
+        }
+        else if (document.attachEvent) {
+            window.attachEvent('onresize', resizeChart);
+        }
+        else {
+            window.resize = resizeChart;
+        }
 
         var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
 
